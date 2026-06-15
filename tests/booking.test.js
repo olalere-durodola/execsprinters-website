@@ -23,5 +23,20 @@ site.ready().then(() => {
   a(d.querySelector('[data-b-vehicle]').options.length === site.content.fleet.vehicles.length, 'vehicle options from fleet');
   a(d.querySelector('[data-b-seattype]').options.length === site.content.booking.childSeatTypes.length, 'seat type options populated');
   a(d.querySelector('#quote .sub').textContent.includes('four-hour'), 'booking sub text bound');
+  const next = d.querySelector('[data-b-next]');
+  const back = d.querySelector('[data-b-back]');
+  // can't advance with empty required pickup
+  next.click();
+  a(d.querySelector('[data-step="1"].is-active') !== null, 'blocked on step 1 when invalid');
+  a(d.querySelector('[data-b-err]').textContent.length > 0, 'shows validation error');
+  // fill required step 1 (point-to-point) then advance
+  d.querySelector('[data-b-pickup]').value = 'DFW Terminal D';
+  d.querySelector('[data-b-dropoff]').value = 'Plano';
+  d.querySelector('[data-b-when]').value = '2099-01-01T10:00';
+  next.click();
+  a(d.querySelector('[data-step="2"].is-active') !== null, 'advances to step 2');
+  a(!back.hidden, 'back button visible on step 2');
+  back.click();
+  a(d.querySelector('[data-step="1"].is-active') !== null, 'back returns to step 1');
   done();
 });

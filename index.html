@@ -982,6 +982,56 @@ function openCal(e){
   return false;
 }
 
+function initBooking(){
+  const form = document.querySelector('#quote .b-form'); if(!form) return;
+  const $ = s => form.querySelector(s);
+  const steps = [...form.querySelectorAll('.b-step')];
+  const dots = [...document.querySelectorAll('#quote .b-dot')];
+  const errBox = $('[data-b-err]');
+  const back = $('[data-b-back]'), next = $('[data-b-next]');
+  let step = 1;
+  const isHourly = () => /hourly/i.test($('[data-b-service]').value);
+
+  function show(n){
+    step = n;
+    steps.forEach(s => s.classList.toggle('is-active', +s.dataset.step === n));
+    dots.forEach(dt => dt.classList.toggle('is-active', +dt.dataset.step <= n));
+    back.hidden = n === 1;
+    next.textContent = n === 3 ? 'Continue to booking →' : 'Continue →';
+    errBox.textContent = '';
+    if(n === 3) renderReview();
+  }
+  function fail(msg, el){ errBox.textContent = msg; if(el) el.focus(); return false; }
+  function validate(n){
+    if(n === 1){
+      if(!$('[data-b-pickup]').value.trim()) return fail('Please enter a pick-up location.', $('[data-b-pickup]'));
+      if(!isHourly() && !$('[data-b-dropoff]').value.trim()) return fail('Please enter a drop-off location.', $('[data-b-dropoff]'));
+      const w = $('[data-b-when]').value;
+      if(!w) return fail('Please choose a date and time.', $('[data-b-when]'));
+      if(new Date(w).getTime() <= Date.now()) return fail('Please choose a future date and time.', $('[data-b-when]'));
+    }
+    if(n === 3){
+      if(!$('[data-b-name]').value.trim()) return fail('Please enter your name.', $('[data-b-name]'));
+      const em = $('[data-b-email]').value.trim();
+      if(!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(em)) return fail('Please enter a valid email.', $('[data-b-email]'));
+      if(!$('[data-b-phone]').value.trim()) return fail('Please enter a phone number.', $('[data-b-phone]'));
+    }
+    return true;
+  }
+  next.addEventListener('click', () => {
+    if(!validate(step)) return;
+    if(step < 3) show(step + 1);
+    else if(typeof submitBooking === 'function') submitBooking(collect());
+  });
+  back.addEventListener('click', () => { if(step > 1) show(step - 1); });
+
+  // placeholders filled in later tasks:
+  function collect(){ return {}; }
+  function renderReview(){}
+  window.__booking = { show, validate, collect, isHourly };  // test hook
+  show(1);
+}
+
 /* ---------- boot ---------- */
 function boot(){
   // sync the min-hours label/field from rates if present
@@ -997,7 +1047,7 @@ function boot(){
       console.warn('[site] using built-in fallback content —', err.message);
       buildHero();
     })
-    .finally(()=>{ observeReveals(); startParallax(); countUp(); magnetize(); onScroll(); liftCurtain(); });
+    .finally(()=>{ observeReveals(); startParallax(); countUp(); magnetize(); onScroll(); liftCurtain(); initBooking(); });
 }
 if(document.readyState!=='loading') boot(); else document.addEventListener('DOMContentLoaded',boot);
 
