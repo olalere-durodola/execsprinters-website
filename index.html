@@ -98,9 +98,6 @@ header.scrolled .menu-btn{color:var(--ink);mix-blend-mode:normal}
 .intro h2 em{font-style:italic;color:var(--bronze)}
 .intro .lead{color:var(--ink-soft);font-size:17px;max-width:46ch}
 .intro .lead p+p{margin-top:18px}
-.stats{display:flex;gap:48px;margin-top:48px;border-top:1px solid var(--line);padding-top:32px}
-.stats .n{font-family:'Fraunces';font-weight:400;font-size:40px;line-height:1}
-.stats .l{font-family:'JetBrains Mono';font-size:11px;letter-spacing:0.06em;color:var(--muted);margin-top:8px}
 
 /* animated hairline divider */
 .divider{height:1px;border:none;margin:0;background:var(--line);position:relative;overflow:hidden}
@@ -234,7 +231,6 @@ footer li a:hover{color:var(--paper)}
   .hero{height:88vh}
   .hero h1{font-size:clamp(40px,11vw,60px)}
   .hero-meta{display:none}
-  .stats{flex-wrap:wrap;gap:28px}
   .intro{padding:80px 0 64px}.intro-grid{gap:40px}
   .fleet,.areas{padding:80px 0}
   .quote-grid{gap:36px}
@@ -513,11 +509,6 @@ header.scrolled{top:0}
       <div data-list="intro.paragraphs">
         <p>Two executive Mercedes-Benz Sprinters, chauffeured by professionals and held to a single promise: you arrive together, on time, without managing a thing.</p>
         <p>Airport transfers, scheduled shuttles, and event coordination — reserved in advance, billed on one invoice, watched over by a dispatch team that's awake when you need it.</p>
-      </div>
-      <div class="stats" data-list="intro.stats">
-        <div><div class="n">15+</div><div class="l">YEARS IN DFW</div></div>
-        <div><div class="n">1,000+</div><div class="l">FIVE-STAR ARRIVALS</div></div>
-        <div><div class="n">24/7</div><div class="l">DISPATCH</div></div>
       </div>
     </div>
   </div>
@@ -887,12 +878,6 @@ function applyContent(){
   if(introP && Array.isArray(get('intro.paragraphs')))
     introP.innerHTML = get('intro.paragraphs').map(p=>`<p>${fmt(p)}</p>`).join('');
 
-  // --- intro stats ---
-  const stats=document.querySelector('[data-list="intro.stats"]');
-  if(stats && Array.isArray(get('intro.stats')))
-    stats.innerHTML = get('intro.stats').map(s=>
-      `<div><div class="n">${fmt(s.number)}</div><div class="l">${fmt(s.label)}</div></div>`).join('');
-
   // --- photo bands ---
   const bandsWrap=document.querySelector('[data-list="bands"]');
   if(bandsWrap && Array.isArray(CONTENT.bands))
@@ -1013,26 +998,6 @@ function onScroll(){
 }
 addEventListener('scroll',onScroll,{passive:true});
 addEventListener('resize',onScroll,{passive:true});
-
-/* ---------- stat count-up on reveal ---------- */
-function countUp(){
-  if(matchMedia('(prefers-reduced-motion:reduce)').matches) return;
-  const nums=document.querySelectorAll('.stats .n');
-  const obs=new IntersectionObserver((es)=>es.forEach(e=>{
-    if(!e.isIntersecting) return; obs.unobserve(e.target);
-    const el=e.target, raw=el.textContent.trim();
-    const m=raw.match(/^([\d,]+)(.*)$/); if(!m) return;       // skip non-numeric like 24/7
-    const target=parseInt(m[1].replace(/,/g,''),10), suffix=m[2]||'';
-    if(!isFinite(target)) return;
-    const dur=1100, t0=performance.now();
-    (function tick(t){
-      const p=Math.min(1,(t-t0)/dur), eased=1-Math.pow(1-p,3);
-      el.textContent=Math.round(target*eased).toLocaleString('en-US')+suffix;
-      if(p<1) requestAnimationFrame(tick);
-    })(t0);
-  }),{threshold:0.5});
-  nums.forEach(n=>obs.observe(n));
-}
 
 /* ---------- magnetic buttons (pointer devices only) ---------- */
 function magnetize(){
@@ -1246,7 +1211,7 @@ function boot(){
       console.warn('[site] using built-in fallback content —', err.message);
       buildHero();
     })
-    .finally(()=>{ observeReveals(); startParallax(); countUp(); magnetize(); onScroll(); liftCurtain(); initBooking(); });
+    .finally(()=>{ observeReveals(); startParallax(); magnetize(); onScroll(); liftCurtain(); initBooking(); });
 }
 if(document.readyState!=='loading') boot(); else document.addEventListener('DOMContentLoaded',boot);
 

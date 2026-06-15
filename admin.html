@@ -139,13 +139,10 @@ const SCHEMA = [
     {t:'text', p:'hero.metaLine2', label:'Corner text — line 2'},
     {t:'text', p:'hero.imageAlt', label:'Photo description (for accessibility/SEO)'},
   ]},
-  { title:'Intro section', note:'headline, paragraphs, the 3 stats', fields:[
+  { title:'Intro section', note:'headline, paragraphs', fields:[
     {t:'text', p:'intro.eyebrow', label:'Small label'},
     {t:'text', p:'intro.heading', label:'Heading', hint:'use *asterisks* for accent'},
     {t:'list-string', p:'intro.paragraphs', label:'Paragraphs', itemLabel:'Paragraph'},
-    {t:'list', p:'intro.stats', label:'Stats', itemLabel:'Stat', item:[
-      {t:'text', k:'number', label:'Number'}, {t:'text', k:'label', label:'Label'}
-    ]},
   ]},
   { title:'Photo story bands', note:'the 3 big image + text blocks', fields:[
     {t:'list', p:'bands', label:'Bands', itemLabel:'Band', item:[
