@@ -164,9 +164,18 @@ Add to `content.json` (and matching admin schema):
 - `rates` (existing) continues to drive the estimate.
 - Vehicle options come from existing `fleet.vehicles[].name`.
 - The existing `quote.*` keys are replaced by `booking.*`; the admin section "Quote section
-  text" becomes "Booking form text".
+  text" becomes "Booking form text". The current `quote.sub` marketing line (e.g. "$150 per
+  hour · four-hour minimum…") is carried over into `booking.sub` so the pricing message is
+  not lost.
 - Form mechanics (steps, validation, Calendly wiring) live in `index.html` JS — not editable
   data, by design.
+
+### Anchor preservation (avoid link churn)
+`#quote` is the inbound anchor used by ~8 places — `nav[].href` in `content.json`, plus
+hero/band/closing/footer links and `data-*` hrefs in `index.html`. To avoid editing all of
+them, **the new booking section keeps `id="quote"`** (the nav label can still read "Quote").
+All existing `#quote` links therefore continue to work unchanged. (The internal data/render
+keys use the `booking.*` namespace; only the DOM `id` is retained as `quote`.)
 
 ## 9. Components / structure (isolation)
 
