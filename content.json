@@ -1,0 +1,205 @@
+{
+  "_readme": "This file holds everything you can change on your website. The easiest way to edit it is to open admin.html in your browser. Tip: wrap any words in *asterisks* to show them in the italic bronze accent style, e.g. \"Your rate, *fixed at booking.*\"",
+
+  "brand": {
+    "name": "ExecSprinters",
+    "tag": "DFW",
+    "pageTitle": "ExecSprinters — DFW Executive Transportation",
+    "metaDescription": "Chauffeured Mercedes-Benz Sprinter transportation across the Dallas–Fort Worth Metroplex. Airport transfers, corporate shuttles, and event charters. Reserved, reliable, on time."
+  },
+
+  "contact": {
+    "phoneDisplay": "(817) 703-7628",
+    "phoneDigits": "8177037628",
+    "email": "reservation@execsprinters.com",
+    "location": "Dallas–Fort Worth, TX",
+    "hours": "Open 24/7",
+    "calendlyUrl": "https://calendly.com/reservations-execsprinters"
+  },
+
+  "rates": {
+    "hourly": 150,
+    "minimumHours": 4,
+    "salesTaxPercent": 8.25,
+    "gratuityPercent": 20
+  },
+
+  "theme": {
+    "paper": "#f5f1ea",
+    "paper2": "#ece6db",
+    "ink": "#1c1812",
+    "inkSoft": "#4a4338",
+    "muted": "#857b6b",
+    "bronze": "#9a6a32",
+    "bronze2": "#b88547",
+    "card": "#ffffff"
+  },
+
+  "nav": [
+    { "label": "Experience", "href": "#experience" },
+    { "label": "Fleet", "href": "#fleet" },
+    { "label": "Quote", "href": "#quote" },
+    { "label": "Areas", "href": "#areas" },
+    { "label": "Contact", "href": "#contact" }
+  ],
+
+  "hero": {
+    "eyebrow": "Dallas–Fort Worth · Executive Transportation",
+    "headlineLine1": "Arrive the way you",
+    "headlineLine2": "*intend to.*",
+    "ctaPrimary": "Request a quote",
+    "image": "images/hero.jpg",
+    "imageAlt": "Black Mercedes-Benz Sprinter on the apron at a DFW airport terminal at golden hour",
+    "metaLine1": "MERCEDES-BENZ SPRINTER",
+    "metaLine2": "CHAUFFEURED · 24/7 DISPATCH"
+  },
+
+  "intro": {
+    "eyebrow": "The Exec Sprinter Standard",
+    "heading": "Group travel across DFW, handled like a *private arrival.*",
+    "paragraphs": [
+      "Two executive Mercedes-Benz Sprinters, chauffeured by professionals and held to a single promise: you arrive together, on time, without managing a thing.",
+      "Airport transfers, scheduled shuttles, and event coordination — reserved in advance, billed on one invoice, watched over by a dispatch team that's awake when you need it."
+    ],
+    "stats": [
+      { "number": "15+", "label": "Years in DFW" },
+      { "number": "1,000+", "label": "Five-star arrivals" },
+      { "number": "24/7", "label": "Dispatch" }
+    ]
+  },
+
+  "bands": [
+    {
+      "index": "01 — The Greeting",
+      "heading": "Met at the curb, *not left waiting.*",
+      "text": "Your chauffeur arrives early, tracks the flight, handles the luggage, and is standing at the door when you reach it. The transfer starts before you've said a word.",
+      "linkText": "Book an airport transfer →",
+      "linkHref": "#quote",
+      "image": "images/greeting.jpg",
+      "imageAlt": "A uniformed chauffeur greeting an executive beside the Sprinter at a passenger pickup canopy"
+    },
+    {
+      "index": "02 — The Interior",
+      "heading": "An office that *moves with you.*",
+      "text": "Diamond-stitched captain's chairs, climate control, and ambient light. Space to talk, prepare, or simply settle in before the meeting that matters.",
+      "linkText": "See the fleet →",
+      "linkHref": "#fleet",
+      "image": "images/interior.jpg",
+      "imageAlt": "Executives seated in the diamond-stitched captain's chairs of the Sprinter interior under blue ambient lighting"
+    },
+    {
+      "index": "03 — The Arrival",
+      "heading": "On schedule is *the baseline.*",
+      "text": "Routes mapped before pickup, traffic and flights monitored live. When plans shift, dispatch reroutes — you simply arrive when you said you would.",
+      "linkText": "Plan your itinerary →",
+      "linkHref": "#quote",
+      "image": "images/arrival.jpg",
+      "imageAlt": "The Sprinter pulling up curbside at a DFW airport terminal at sunset"
+    }
+  ],
+
+  "fleet": {
+    "eyebrow": "The Fleet",
+    "heading": "Two Sprinters. *One standard.*",
+    "text": "Both Mercedes-Benz, both maintained to commercial spec and detailed before every ride — sized for the day you're running.",
+    "vehicles": [
+      {
+        "tag": "EXECUTIVE",
+        "name": "Executive Sprinter",
+        "caption": "airport · roadshow · client transfer",
+        "image": "images/executive.jpg",
+        "imageAlt": "ExecSprinters executive Mercedes-Benz Sprinter",
+        "specs": [
+          { "label": "Seats", "value": "Up to 11" },
+          { "label": "Best for", "value": "Teams" },
+          { "label": "Luggage", "value": "Full" }
+        ]
+      },
+      {
+        "tag": "LOUNGE",
+        "name": "Lounge Sprinter",
+        "caption": "events · groups · premium comfort",
+        "image": "images/lounge.jpg",
+        "imageAlt": "ExecSprinters lounge Sprinter interior with captain's chairs",
+        "specs": [
+          { "label": "Seats", "value": "Captain's" },
+          { "label": "Best for", "value": "Comfort" },
+          { "label": "Lighting", "value": "Ambient" }
+        ]
+      }
+    ]
+  },
+
+  "marquee": [
+    "Mercedes-Benz Sprinter Fleet",
+    "Licensed & Insured",
+    "Live Flight Tracking",
+    "Meet & Greet Service",
+    "24/7 Dispatch",
+    "Fixed Rates — No Surge",
+    "Professional Chauffeurs"
+  ],
+
+  "testimonial": {
+    "eyebrow": "From the back seat",
+    "quote": "They had us at the curb before the wheels stopped turning — three executives, two cities, one flawless day. ExecSprinters is the only call we make in DFW.",
+    "author": "Marcus Reynolds",
+    "role": "VP Operations · Fortune 500 Energy"
+  },
+
+  "quote": {
+    "eyebrow": "Instant Estimate",
+    "heading": "Your rate, *fixed at booking.*",
+    "sub": "$150 per hour · four-hour minimum · no surge, no surprises. Private — no details required to see a number."
+  },
+
+  "areas": {
+    "eyebrow": "Service Area",
+    "heading": "Across Dallas–Fort Worth *& beyond.*",
+    "text": "Headquartered in DFW and licensed across the region — focused on the corridors that keep response fast and reliability high.",
+    "list": [
+      { "code": "DAL", "name": "Dallas — Downtown, Uptown, Arts District" },
+      { "code": "FTW", "name": "Fort Worth — Stockyards, Sundance Square" },
+      { "code": "GRP", "name": "Grapevine — DFW Airport, winery tours" },
+      { "code": "PLN", "name": "Plano & Frisco — Legacy West, The Star" },
+      { "code": "ARL", "name": "Arlington — AT&T Stadium, Globe Life" },
+      { "code": "STH", "name": "Southlake & Colleyville" },
+      { "code": "IRV", "name": "Irving / Las Colinas — Fortune 500 HQs" },
+      { "code": "PRO", "name": "Prosper · Celina · McKinney" }
+    ]
+  },
+
+  "closing": {
+    "eyebrow": "Reservations",
+    "heading": "Every detail, *arranged in advance.*",
+    "text": "Your vehicle reserved. Your rate fixed at booking. Your itinerary held by a dispatch team that doesn't improvise.",
+    "ctaPrimary": "Request a quote",
+    "ctaConsult": "Schedule a consultation",
+    "image": "images/closing.jpg",
+    "imageAlt": "The Sprinter on the apron at golden hour"
+  },
+
+  "footer": {
+    "blurb": "Chauffeured Mercedes-Benz Sprinter transportation across the Dallas–Fort Worth Metroplex. Reserved. Reliable. On time.",
+    "columns": [
+      {
+        "title": "Service",
+        "links": [
+          { "label": "Airport Transfers", "href": "#experience" },
+          { "label": "Corporate Shuttles", "href": "#experience" },
+          { "label": "Charter & Events", "href": "#experience" },
+          { "label": "Corporate Accounts", "href": "#quote" }
+        ]
+      },
+      {
+        "title": "Fleet",
+        "links": [
+          { "label": "Executive Sprinter", "href": "#fleet" },
+          { "label": "Lounge Sprinter", "href": "#fleet" }
+        ]
+      }
+    ],
+    "copyrightLeft": "© 2026 EXECSPRINTERS · ALL RIGHTS RESERVED",
+    "copyrightRight": "DFW EXECUTIVE TRANSPORTATION"
+  }
+}

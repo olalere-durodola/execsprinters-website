@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Edit My Website — ExecSprinters</title>
+<style>
+  :root{--ink:#1c1812;--paper:#f6f3ee;--bronze:#9a6a32;--line:#e2dccf;--card:#fff;--muted:#857b6b;--ok:#2e7d4f;--warn:#b4541f}
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{background:var(--paper);color:var(--ink);font:15px/1.55 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;padding-bottom:120px}
+  header{position:sticky;top:0;z-index:20;background:var(--ink);color:var(--paper);padding:16px 24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;box-shadow:0 2px 20px rgba(0,0,0,.18)}
+  header h1{font-size:18px;font-weight:600;letter-spacing:.2px}
+  header .sp{flex:1}
+  .wrap{max-width:840px;margin:0 auto;padding:24px}
+  .intro{background:#fff7e8;border:1px solid #e8d9b5;border-radius:10px;padding:16px 18px;margin:18px 0 26px;font-size:14px}
+  .intro b{color:var(--bronze)}
+  details.sec{background:var(--card);border:1px solid var(--line);border-radius:12px;margin:0 0 14px;overflow:hidden}
+  details.sec>summary{list-style:none;cursor:pointer;padding:16px 20px;font-weight:600;font-size:16px;display:flex;align-items:center;gap:10px;user-select:none}
+  details.sec>summary::-webkit-details-marker{display:none}
+  details.sec>summary::before{content:"▸";color:var(--bronze);transition:.2s;font-size:13px}
+  details.sec[open]>summary::before{transform:rotate(90deg)}
+  details.sec>summary small{font-weight:400;color:var(--muted);font-size:13px}
+  .body{padding:6px 20px 20px}
+  .field{margin:14px 0}
+  .field label{display:block;font-weight:600;font-size:13px;margin-bottom:5px}
+  .field .hint{font-weight:400;color:var(--muted);font-size:12px;margin-left:6px}
+  .field input[type=text],.field input[type=number],.field input[type=email],.field textarea{
+    width:100%;padding:10px 12px;border:1px solid var(--line);border-radius:8px;font:inherit;background:#fcfbf9}
+  .field textarea{min-height:72px;resize:vertical}
+  .field input:focus,.field textarea:focus{outline:none;border-color:var(--bronze);background:#fff}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .color-row{display:flex;align-items:center;gap:10px}
+  .color-row input[type=color]{width:46px;height:38px;border:1px solid var(--line);border-radius:8px;background:#fff;padding:2px;cursor:pointer}
+  .color-row input[type=text]{flex:1;max-width:140px;font-family:ui-monospace,monospace}
+  .img-field{display:flex;gap:14px;align-items:center;border:1px dashed var(--line);border-radius:10px;padding:12px;background:#fcfbf9}
+  .img-field img{width:120px;height:78px;object-fit:cover;border-radius:6px;background:#eee;flex-shrink:0}
+  .img-field .meta{flex:1;min-width:0}
+  .img-field .fn{font-family:ui-monospace,monospace;font-size:12px;color:var(--muted);word-break:break-all}
+  .changed{color:var(--warn);font-weight:600;font-size:12px}
+  .listcard{border:1px solid var(--line);border-radius:10px;padding:14px;margin:12px 0;background:#fcfbf9;position:relative}
+  .listcard .del{position:absolute;top:10px;right:10px;background:#fbeae3;color:var(--warn);border:none;border-radius:6px;padding:5px 10px;font-size:12px;cursor:pointer;font-weight:600}
+  .listcard .del:hover{background:#f6d8cc}
+  .addbtn{background:#eef3ee;color:var(--ok);border:1px solid #cfe3d4;border-radius:8px;padding:9px 14px;font-size:13px;font-weight:600;cursor:pointer}
+  .addbtn:hover{background:#e2eee4}
+  button.primary{background:var(--bronze);color:#fff;border:none;border-radius:8px;padding:11px 20px;font-weight:600;font-size:14px;cursor:pointer}
+  button.primary:hover{filter:brightness(1.08)}
+  button.ghost{background:transparent;color:var(--paper);border:1px solid rgba(255,255,255,.4);border-radius:8px;padding:10px 16px;font-weight:500;font-size:13px;cursor:pointer}
+  button.ghost:hover{background:rgba(255,255,255,.1)}
+  .savebar{position:fixed;left:0;right:0;bottom:0;z-index:30;background:#fff;border-top:1px solid var(--line);
+    padding:14px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap;box-shadow:0 -4px 20px rgba(0,0,0,.06)}
+  .savebar .status{color:var(--muted);font-size:13px;flex:1;min-width:160px}
+  .pill{font-size:11px;background:#f0ece2;color:var(--muted);border-radius:20px;padding:3px 9px;margin-left:8px}
+  .load-fallback{display:none;background:#fbeae3;border:1px solid #f0cfc0;border-radius:10px;padding:14px;margin:14px 0}
+  .load-fallback.show{display:block}
+  .toast{position:fixed;bottom:84px;left:50%;transform:translateX(-50%);background:var(--ink);color:#fff;padding:12px 20px;border-radius:10px;font-size:14px;opacity:0;transition:.3s;pointer-events:none;z-index:40}
+  .toast.show{opacity:1}
+</style>
+</head>
+<body>
+<header>
+  <h1>✎ Edit My Website</h1>
+  <span class="pill" id="loadstate">loading…</span>
+  <span class="sp"></span>
+  <button class="ghost" onclick="openPreview()">Preview site ↗</button>
+</header>
+
+<div class="wrap">
+  <div class="intro">
+    <b>How this works:</b> change anything below, then click <b>Save changes</b> at the bottom. That downloads an updated
+    <code>content.json</code> (and any new photos). Upload those files to your website to publish.
+    <br><b>Accent text tip:</b> wrap words in *asterisks* to show them in the italic bronze style — e.g. <code>Your rate, *fixed at booking.*</code>
+  </div>
+
+  <div class="load-fallback" id="fallback">
+    <b>Couldn't load your content automatically.</b> This usually means you opened this page directly from your computer.
+    Click below and choose your <code>content.json</code> file to start editing.
+    <div style="margin-top:10px"><input type="file" id="manualLoad" accept="application/json,.json"></div>
+  </div>
+
+  <div id="form"></div>
+</div>
+
+<div class="savebar">
+  <div class="status" id="status">Loading…</div>
+  <button class="primary" onclick="save()">⬇ Save changes</button>
+</div>
+<div class="toast" id="toast"></div>
+
+<script>
+/* ============================================================
+   ADMIN EDITOR for content.json
+   Pure browser, no server. Loads content.json, shows friendly
+   forms, and lets the owner download an updated content.json
+   plus any replaced photos.
+   ============================================================ */
+
+let DATA = null;                 // the working copy of content.json
+const NEW_IMAGES = {};           // basename -> File (photos the owner replaced)
+
+/* ---- the form layout. Each entry maps to a part of content.json ---- */
+const SCHEMA = [
+  { title:'Business name & SEO', note:'name, browser tab title, Google description', fields:[
+    {t:'text', p:'brand.name', label:'Business name'},
+    {t:'text', p:'brand.tag', label:'Small tag next to name', hint:'e.g. DFW'},
+    {t:'text', p:'brand.pageTitle', label:'Browser tab title'},
+    {t:'textarea', p:'brand.metaDescription', label:'Google search description', hint:'~155 characters'},
+  ]},
+  { title:'Contact & booking', note:'phone, email, Calendly link', fields:[
+    {t:'text', p:'contact.phoneDisplay', label:'Phone (as shown)', hint:'e.g. (817) 703-7628'},
+    {t:'text', p:'contact.phoneDigits', label:'Phone (digits only, for tap-to-call)', hint:'numbers only, e.g. 8177037628'},
+    {t:'text', p:'contact.email', label:'Email address'},
+    {t:'text', p:'contact.location', label:'Location line'},
+    {t:'text', p:'contact.hours', label:'Hours line'},
+    {t:'text', p:'contact.calendlyUrl', label:'Calendly booking link'},
+  ]},
+  { title:'Pricing (quote calculator)', note:'rates used to estimate quotes', fields:[
+    {t:'number', p:'rates.hourly', label:'Hourly rate ($)'},
+    {t:'number', p:'rates.minimumHours', label:'Minimum hours'},
+    {t:'number', p:'rates.salesTaxPercent', label:'Sales tax (%)', step:'0.01'},
+    {t:'number', p:'rates.gratuityPercent', label:'Suggested gratuity (%)'},
+  ]},
+  { title:'Colors & branding', note:'site color palette', fields:[
+    {t:'color', p:'theme.bronze', label:'Accent (bronze) — headings & highlights'},
+    {t:'color', p:'theme.bronze2', label:'Accent light — on dark backgrounds'},
+    {t:'color', p:'theme.paper', label:'Background (paper)'},
+    {t:'color', p:'theme.ink', label:'Dark / text color (ink)'},
+    {t:'color', p:'theme.inkSoft', label:'Soft text'},
+    {t:'color', p:'theme.muted', label:'Muted labels'},
+    {t:'color', p:'theme.paper2', label:'Background alt'},
+    {t:'color', p:'theme.card', label:'Card background'},
+  ]},
+  { title:'Top hero (first screen)', note:'big headline + main photo', fields:[
+    {t:'image', p:'hero.image', label:'Hero photo'},
+    {t:'text', p:'hero.eyebrow', label:'Small label above headline'},
+    {t:'text', p:'hero.headlineLine1', label:'Headline — line 1'},
+    {t:'text', p:'hero.headlineLine2', label:'Headline — line 2 (accent)', hint:'wrap in *asterisks* for italic'},
+    {t:'text', p:'hero.ctaPrimary', label:'Main button text'},
+    {t:'text', p:'hero.metaLine1', label:'Corner text — line 1'},
+    {t:'text', p:'hero.metaLine2', label:'Corner text — line 2'},
+    {t:'text', p:'hero.imageAlt', label:'Photo description (for accessibility/SEO)'},
+  ]},
+  { title:'Intro section', note:'headline, paragraphs, the 3 stats', fields:[
+    {t:'text', p:'intro.eyebrow', label:'Small label'},
+    {t:'text', p:'intro.heading', label:'Heading', hint:'use *asterisks* for accent'},
+    {t:'list-string', p:'intro.paragraphs', label:'Paragraphs', itemLabel:'Paragraph'},
+    {t:'list', p:'intro.stats', label:'Stats', itemLabel:'Stat', item:[
+      {t:'text', k:'number', label:'Number'}, {t:'text', k:'label', label:'Label'}
+    ]},
+  ]},
+  { title:'Photo story bands', note:'the 3 big image + text blocks', fields:[
+    {t:'list', p:'bands', label:'Bands', itemLabel:'Band', item:[
+      {t:'image', k:'image', label:'Photo'},
+      {t:'text', k:'index', label:'Small number/label', hint:'e.g. 01 — The Greeting'},
+      {t:'text', k:'heading', label:'Heading', hint:'use *asterisks* for accent'},
+      {t:'textarea', k:'text', label:'Paragraph'},
+      {t:'text', k:'linkText', label:'Link text'},
+      {t:'text', k:'linkHref', label:'Link target', hint:'e.g. #quote'},
+      {t:'text', k:'imageAlt', label:'Photo description'},
+    ]},
+  ]},
+  { title:'Fleet', note:'vehicles', fields:[
+    {t:'text', p:'fleet.eyebrow', label:'Small label'},
+    {t:'text', p:'fleet.heading', label:'Heading', hint:'use *asterisks* for accent'},
+    {t:'textarea', p:'fleet.text', label:'Intro paragraph'},
+    {t:'list', p:'fleet.vehicles', label:'Vehicles', itemLabel:'Vehicle', item:[
+      {t:'image', k:'image', label:'Photo'},
+      {t:'text', k:'tag', label:'Corner tag', hint:'e.g. EXECUTIVE'},
+      {t:'text', k:'name', label:'Name'},
+      {t:'text', k:'caption', label:'Caption line'},
+      {t:'text', k:'imageAlt', label:'Photo description'},
+      {t:'list', k:'specs', label:'Spec boxes', itemLabel:'Spec', item:[
+        {t:'text', k:'label', label:'Label'}, {t:'text', k:'value', label:'Value'}
+      ]},
+    ]},
+  ]},
+  { title:'Trust marquee', note:'the scrolling credentials strip under the hero', fields:[
+    {t:'list-string', p:'marquee', label:'Credentials', itemLabel:'Item'},
+  ]},
+  { title:'Testimonial', note:'the customer pull-quote', fields:[
+    {t:'text', p:'testimonial.eyebrow', label:'Small label'},
+    {t:'textarea', p:'testimonial.quote', label:'Quote', hint:'use *asterisks* for accent'},
+    {t:'text', p:'testimonial.author', label:'Author name'},
+    {t:'text', p:'testimonial.role', label:'Author role / company'},
+  ]},
+  { title:'Quote section text', note:'headline above the calculator', fields:[
+    {t:'text', p:'quote.eyebrow', label:'Small label'},
+    {t:'text', p:'quote.heading', label:'Heading', hint:'use *asterisks* for accent'},
+    {t:'textarea', p:'quote.sub', label:'Sub text'},
+  ]},
+  { title:'Service areas', note:'the list of areas served', fields:[
+    {t:'text', p:'areas.eyebrow', label:'Small label'},
+    {t:'text', p:'areas.heading', label:'Heading', hint:'use *asterisks* for accent'},
+    {t:'textarea', p:'areas.text', label:'Intro paragraph'},
+    {t:'list', p:'areas.list', label:'Areas', itemLabel:'Area', item:[
+      {t:'text', k:'code', label:'Short code', hint:'e.g. DAL'},
+      {t:'text', k:'name', label:'Area name'},
+    ]},
+  ]},
+  { title:'Closing call-to-action', note:'final section over a photo', fields:[
+    {t:'image', p:'closing.image', label:'Background photo'},
+    {t:'text', p:'closing.eyebrow', label:'Small label'},
+    {t:'text', p:'closing.heading', label:'Heading', hint:'use *asterisks* for accent'},
+    {t:'textarea', p:'closing.text', label:'Paragraph'},
+    {t:'text', p:'closing.ctaPrimary', label:'Main button text'},
+    {t:'text', p:'closing.ctaConsult', label:'Consultation button text'},
+    {t:'text', p:'closing.imageAlt', label:'Photo description'},
+  ]},
+  { title:'Footer', note:'blurb, link columns, copyright', fields:[
+    {t:'textarea', p:'footer.blurb', label:'Footer paragraph'},
+    {t:'list', p:'footer.columns', label:'Link columns', itemLabel:'Column', item:[
+      {t:'text', k:'title', label:'Column title'},
+      {t:'list', k:'links', label:'Links', itemLabel:'Link', item:[
+        {t:'text', k:'label', label:'Link text'}, {t:'text', k:'href', label:'Link target'}
+      ]},
+    ]},
+    {t:'text', p:'footer.copyrightLeft', label:'Copyright (left)'},
+    {t:'text', p:'footer.copyrightRight', label:'Copyright (right)'},
+  ]},
+];
+
+/* ---------- tiny path helpers ---------- */
+function getp(obj,path){return path.split('.').reduce((o,k)=>o==null?undefined:o[k],obj);}
+function setp(obj,path,val){
+  const ks=path.split('.'); let o=obj;
+  for(let i=0;i<ks.length-1;i++){ if(o[ks[i]]==null)o[ks[i]]={}; o=o[ks[i]]; }
+  o[ks[ks.length-1]]=val;
+}
+function basename(p){return String(p||'').split('/').pop();}
+function esc(s){return String(s==null?'':s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');}
+
+/* ---------- rendering ---------- */
+function render(){
+  const root=document.getElementById('form');
+  root.innerHTML='';
+  SCHEMA.forEach((sec,si)=>{
+    const d=document.createElement('details');
+    d.className='sec';
+    d.innerHTML=`<summary>${esc(sec.title)} <small>— ${esc(sec.note)}</small></summary>`;
+    const body=document.createElement('div'); body.className='body';
+    sec.fields.forEach(f=> body.appendChild(fieldEl(f, DATA, f.p)));
+    d.appendChild(body); root.appendChild(d);
+  });
+}
+
+// Build a field. `obj` is the object that holds it; `abspath` is the full path
+// for top-level fields (with .p) OR null for list-item fields (use f.k on obj).
+function fieldEl(f, obj, abspath){
+  const wrap=document.createElement('div'); wrap.className='field';
+  const read =()=> abspath!=null ? getp(DATA,abspath) : obj[f.k];
+  const write=(v)=>{ if(abspath!=null) setp(DATA,abspath,v); else obj[f.k]=v; markDirty(); };
+
+  if(f.t==='text'||f.t==='number'||f.t==='email'||f.t==='textarea'){
+    wrap.innerHTML=`<label>${esc(f.label)}${f.hint?`<span class="hint">${esc(f.hint)}</span>`:''}</label>`;
+    const inp=document.createElement(f.t==='textarea'?'textarea':'input');
+    if(f.t!=='textarea') inp.type=(f.t==='number'?'number':'text');
+    if(f.step) inp.step=f.step;
+    const val=read(); inp.value=val==null?'':val;
+    inp.addEventListener('input',()=>write(f.t==='number'? (inp.value===''?'':+inp.value) : inp.value));
+    wrap.appendChild(inp);
+    return wrap;
+  }
+
+  if(f.t==='color'){
+    wrap.innerHTML=`<label>${esc(f.label)}</label>`;
+    const row=document.createElement('div'); row.className='color-row';
+    const cur=read()||'#000000';
+    const pick=document.createElement('input'); pick.type='color'; pick.value=toHex(cur);
+    const txt=document.createElement('input'); txt.type='text'; txt.value=cur;
+    pick.addEventListener('input',()=>{txt.value=pick.value;write(pick.value);});
+    txt.addEventListener('input',()=>{write(txt.value); if(/^#[0-9a-f]{6}$/i.test(txt.value))pick.value=txt.value;});
+    row.append(pick,txt); wrap.appendChild(row);
+    return wrap;
+  }
+
+  if(f.t==='image'){
+    wrap.innerHTML=`<label>${esc(f.label)}</label>`;
+    const path=read()||''; const fn=basename(path);
+    const box=document.createElement('div'); box.className='img-field';
+    const img=document.createElement('img'); img.src=path; img.alt='';
+    const meta=document.createElement('div'); meta.className='meta';
+    meta.innerHTML=`<div class="fn">${esc(fn)}</div><div class="ch" style="margin:6px 0 8px"></div>`;
+    const file=document.createElement('input'); file.type='file'; file.accept='image/*';
+    file.addEventListener('change',()=>{
+      const chosen=file.files[0]; if(!chosen)return;
+      NEW_IMAGES[fn]=chosen;                     // keep same filename on the site
+      img.src=URL.createObjectURL(chosen);
+      meta.querySelector('.ch').innerHTML=`<span class="changed">● new photo — will download as ${esc(fn)}</span>`;
+      markDirty();
+    });
+    meta.appendChild(file); box.append(img,meta); wrap.appendChild(box);
+    return wrap;
+  }
+
+  if(f.t==='list-string'){
+    wrap.innerHTML=`<label>${esc(f.label)}</label>`;
+    const arr = (abspath!=null? getp(DATA,abspath): obj[f.k]) || [];
+    const host=document.createElement('div');
+    function draw(){
+      host.innerHTML='';
+      arr.forEach((val,idx)=>{
+        const card=document.createElement('div'); card.className='listcard';
+        card.innerHTML=`<button class="del">Remove</button><label>${esc(f.itemLabel)} ${idx+1}</label>`;
+        const ta=document.createElement('textarea'); ta.value=val;
+        ta.addEventListener('input',()=>{arr[idx]=ta.value;markDirty();});
+        card.querySelector('.del').addEventListener('click',()=>{arr.splice(idx,1);markDirty();draw();});
+        card.appendChild(ta); host.appendChild(card);
+      });
+      const add=document.createElement('button'); add.className='addbtn'; add.textContent='+ Add '+f.itemLabel;
+      add.addEventListener('click',()=>{arr.push('');markDirty();draw();});
+      host.appendChild(add);
+    }
+    draw(); wrap.appendChild(host);
+    return wrap;
+  }
+
+  if(f.t==='list'){
+    wrap.innerHTML=`<label>${esc(f.label)}</label>`;
+    const arr = (abspath!=null? getp(DATA,abspath): obj[f.k]) || [];
+    const host=document.createElement('div');
+    function draw(){
+      host.innerHTML='';
+      arr.forEach((item,idx)=>{
+        const card=document.createElement('div'); card.className='listcard';
+        const head=document.createElement('div');
+        head.innerHTML=`<button class="del">Remove</button><div style="font-weight:600;margin-bottom:4px">${esc(f.itemLabel)} ${idx+1}</div>`;
+        card.appendChild(head);
+        f.item.forEach(sub=> card.appendChild(fieldEl(sub, item, null)));
+        head.querySelector('.del').addEventListener('click',()=>{arr.splice(idx,1);markDirty();draw();});
+        host.appendChild(card);
+      });
+      const add=document.createElement('button'); add.className='addbtn'; add.textContent='+ Add '+f.itemLabel;
+      add.addEventListener('click',()=>{arr.push(blankItem(f.item));markDirty();draw();});
+      host.appendChild(add);
+    }
+    draw(); wrap.appendChild(host);
+    return wrap;
+  }
+  return wrap;
+}
+
+function blankItem(itemFields){
+  const o={};
+  itemFields.forEach(s=>{ o[s.k] = (s.t==='list'||s.t==='list-string')?[]:''; });
+  return o;
+}
+function toHex(c){ return /^#[0-9a-f]{6}$/i.test(c)?c:'#000000'; }
+
+/* ---------- dirty / status ---------- */
+let dirty=false;
+function markDirty(){ dirty=true; document.getElementById('status').textContent='Unsaved changes — click Save changes to download.'; }
+addEventListener('beforeunload',e=>{ if(dirty){e.preventDefault();e.returnValue='';} });
+
+/* ---------- save ---------- */
+function save(){
+  const blob=new Blob([JSON.stringify(DATA,null,2)],{type:'application/json'});
+  downloadBlob(blob,'content.json');
+  const imgs=Object.entries(NEW_IMAGES);
+  let extra='';
+  if(imgs.length){
+    // download each replaced photo, keeping its filename
+    imgs.forEach(([name,file],i)=> setTimeout(()=>downloadBlob(file,name), 250*(i+1)));
+    extra=` + ${imgs.length} photo${imgs.length>1?'s':''}`;
+  }
+  dirty=false;
+  document.getElementById('status').textContent='Saved! Now upload content.json'+(imgs.length?' and the photo(s)':'')+' to your website.';
+  toast('Downloaded content.json'+extra+' ✓');
+}
+function downloadBlob(blob,filename){
+  const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download=filename;
+  document.body.appendChild(a); a.click(); a.remove();
+  setTimeout(()=>URL.revokeObjectURL(a.href),4000);
+}
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3200);}
+function openPreview(){ window.open('index.html','_blank'); }
+
+/* ---------- load ---------- */
+function start(data){
+  DATA=data;
+  document.getElementById('loadstate').textContent='loaded';
+  document.getElementById('status').textContent='Ready. Make your changes, then click Save changes.';
+  document.getElementById('fallback').classList.remove('show');
+  render();
+}
+fetch('content.json',{cache:'no-store'})
+  .then(r=>{ if(!r.ok) throw new Error('not found'); return r.json(); })
+  .then(start)
+  .catch(()=>{
+    document.getElementById('loadstate').textContent='action needed';
+    document.getElementById('status').textContent='Choose your content.json file to begin.';
+    document.getElementById('fallback').classList.add('show');
+  });
+document.getElementById('manualLoad').addEventListener('change',function(){
+  const f=this.files[0]; if(!f)return;
+  const fr=new FileReader();
+  fr.onload=()=>{ try{ start(JSON.parse(fr.result)); }catch(e){ alert('That file is not valid JSON: '+e.message); } };
+  fr.readAsText(f);
+});
+</script>
+</body>
+</html>
