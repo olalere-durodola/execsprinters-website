@@ -451,6 +451,38 @@ header.scrolled{top:0}
 }
 @media(max-width:560px){.amenities{grid-template-columns:1fr}}
 
+/* ===== polish pass ===== */
+/* 1. anchor jumps clear the fixed header */
+html{scroll-padding-top:96px}
+/* 2. graceful line-breaking */
+h1,h2,h3,h4{text-wrap:balance}
+p{text-wrap:pretty}
+/* 3. sharper type rendering */
+body{text-rendering:optimizeLegibility;-moz-osx-font-smoothing:grayscale}
+/* 4. on-brand scrollbar */
+html{scrollbar-width:thin;scrollbar-color:var(--bronze) var(--paper-2)}
+::-webkit-scrollbar{width:11px;height:11px}
+::-webkit-scrollbar-track{background:var(--paper-2)}
+::-webkit-scrollbar-thumb{background:var(--bronze);border:3px solid var(--paper-2);border-radius:20px}
+::-webkit-scrollbar-thumb:hover{background:var(--bronze-2)}
+/* 5. staggered reveals */
+.services-grid .service-card:nth-child(2){transition-delay:.07s}
+.services-grid .service-card:nth-child(3){transition-delay:.14s}
+.services-grid .service-card:nth-child(4){transition-delay:.21s}
+.services-grid .service-card:nth-child(5){transition-delay:.28s}
+.amenities li,.area-list .a{opacity:0;transform:translateY(9px);
+  transition:opacity .55s cubic-bezier(.2,.7,.2,1),transform .55s cubic-bezier(.2,.7,.2,1)}
+.showcase.in .amenities li,.area-list.in .a{opacity:1;transform:none}
+.amenities li:nth-child(2),.area-list .a:nth-child(2){transition-delay:.05s}
+.amenities li:nth-child(3),.area-list .a:nth-child(3){transition-delay:.10s}
+.amenities li:nth-child(4),.area-list .a:nth-child(4){transition-delay:.15s}
+.amenities li:nth-child(5),.area-list .a:nth-child(5){transition-delay:.20s}
+.amenities li:nth-child(6),.area-list .a:nth-child(6){transition-delay:.25s}
+.amenities li:nth-child(7),.area-list .a:nth-child(7){transition-delay:.30s}
+.amenities li:nth-child(8),.area-list .a:nth-child(8){transition-delay:.35s}
+.amenities li:nth-child(9){transition-delay:.40s}
+.amenities li:nth-child(10){transition-delay:.45s}
+
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}
   .reveal{opacity:1;transform:none}.divider::after{transform:scaleX(1)}
@@ -459,6 +491,7 @@ header.scrolled{top:0}
   .marquee-track{animation:none!important}
   .pl-bar i{width:100%}
   .b-step.is-active{animation:none}
+  .amenities li,.area-list .a{opacity:1;transform:none}
 }
 </style>
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
