@@ -1,7 +1,6 @@
 # dependencies / tooling (none are needed to run the site)
 node_modules/
 package-lock.json
-package.json
 
 # local backup of the original single-file design (git history is the real backup)
 index.original.backup.html
