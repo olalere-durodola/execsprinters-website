@@ -69,8 +69,19 @@ site.ready().then(() => {
   const est = d.querySelector('[data-b-estimate]');
   a(est.classList.contains('show'), 'estimate shown for hourly');
   a(/\$900\.00/.test(est.textContent), 'hourly base 6×150 = $900.00');
+  a(/\$1,154\.25/.test(est.textContent), 'hourly total includes gratuity = $1,154.25');
+  a(/Gratuity/.test(est.textContent), 'gratuity line present');
+  // airport = flat rate
   setSvc('From Airport');
-  a(/confirmed at booking/i.test(est.textContent), 'non-hourly shows fare-confirmed copy');
+  a(/\$250\.00/.test(est.textContent), 'airport base = flat $250.00');
+  a(/Gratuity/.test(est.textContent), 'airport estimate has gratuity line');
+  a(!/confirmed at booking/i.test(est.textContent), 'no more fare-confirmed copy');
+  // point-to-point = hourly priced, hours field visible, 4-hr minimum
+  setSvc('Point-to-Point');
+  a(!d.querySelector('[data-b-hours-wrap]').hidden, 'hours field shows for point-to-point');
+  d.querySelector('[data-b-hours]').value = '1';
+  d.querySelector('[data-b-hours]').dispatchEvent(new site.window.Event('input'));
+  a(/\$600\.00/.test(est.textContent), 'point-to-point clamps to 4-hr min = $600.00 base');
   // fill a full point-to-point booking and submit from step 3
   setSvc('Point-to-Point');
   d.querySelector('[data-b-pickup]').value='DFW Terminal D';
