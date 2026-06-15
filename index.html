@@ -570,12 +570,12 @@ header.scrolled{top:0}
           <legend>Step 2 · Passengers &amp; Extras</legend>
           <div class="field-row">
             <div class="field"><label>Passengers</label>
-              <div class="b-stepper" data-b-stepper="pax" data-min="1" data-val="1"></div></div>
+              <div class="b-stepper" data-b-stepper="pax" data-min="1" data-max="14" data-val="1"></div></div>
             <div class="field"><label>Luggage</label>
-              <div class="b-stepper" data-b-stepper="bags" data-min="0" data-val="0"></div></div>
+              <div class="b-stepper" data-b-stepper="bags" data-min="0" data-max="30" data-val="0"></div></div>
           </div>
           <div class="field"><label>Child Seats</label>
-            <div class="b-stepper" data-b-stepper="seats" data-min="0" data-val="0"></div></div>
+            <div class="b-stepper" data-b-stepper="seats" data-min="0" data-max="4" data-val="0"></div></div>
           <div class="field" data-b-seattype-wrap hidden><label>Child Seat Type</label>
             <select data-b-seattype></select></div>
           <label class="b-toggle"><input type="checkbox" data-b-accessible>
@@ -709,6 +709,10 @@ function renderBooking(){
   fill('[data-b-seattype]', b.childSeatTypes);
   const veh = (CONTENT.fleet&&CONTENT.fleet.vehicles||[]).map(v=>v.name);
   fill('[data-b-vehicle]', veh);
+  // keep the hourly minimum label/field in sync with the editable rate
+  const min = (CONTENT.rates && CONTENT.rates.minimumHours) || 4;
+  const hl = document.querySelector('[data-b-hours-lbl]'); if(hl) hl.textContent = `Hours (${min} min)`;
+  const hf = document.querySelector('[data-b-hours]'); if(hf){ hf.min = min; if(+hf.value < min) hf.value = min; }
 }
 
 function applyContent(){
@@ -1040,6 +1044,7 @@ function initBooking(){
     if(b.hours) L.push('Hours: '+b.hours);
     if(b.flight) L.push('Flight #: '+b.flight);
     L.push(`Passengers: ${b.pax} | Luggage: ${b.bags} | Child seats: ${b.seats}${b.seatType?` (${b.seatType})`:''} | Accessible: ${b.accessible}`);
+    if(b.phone) L.push('Phone: '+b.phone);
     if(b.notes) L.push('Notes: '+b.notes);
     return L.join('\n');
   }
@@ -1087,10 +1092,11 @@ function initBooking(){
   // steppers
   form.querySelectorAll('[data-b-stepper]').forEach(s => {
     const min = +s.dataset.min || 0;
+    const max = s.dataset.max ? +s.dataset.max : Infinity;
     let val = +s.dataset.val || min;
     s.innerHTML = `<button type="button" aria-label="decrease">−</button><span class="b-val">${val}</span><button type="button" aria-label="increase">+</button>`;
     const out = s.querySelector('.b-val');
-    const set = v => { val = Math.max(min, v); out.textContent = val; s.dataset.val = val;
+    const set = v => { val = Math.min(max, Math.max(min, v)); out.textContent = val; s.dataset.val = val;
       if(s.dataset.bStepper === 'seats'){ $('[data-b-seattype-wrap]').hidden = val === 0; } };
     s.querySelectorAll('button')[0].addEventListener('click', () => set(val - 1));
     s.querySelectorAll('button')[1].addEventListener('click', () => set(val + 1));

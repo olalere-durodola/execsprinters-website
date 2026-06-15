@@ -88,5 +88,20 @@ site.ready().then(() => {
   a(call.prefill.name === 'Jane Exec' && call.prefill.email === 'jane@corp.com', 'name/email prefilled');
   a(/Pick-up: DFW Terminal D/.test(call.prefill.customAnswers.a1), 'summary in customAnswers.a1');
   a(/Drop-off: Legacy West/.test(call.prefill.customAnswers.a1), 'summary includes drop-off');
+  a(/Phone: 8175551234/.test(call.prefill.customAnswers.a1), 'summary includes phone');
+
+  // child-seat stepper caps at its max (4)
+  const seats2 = d.querySelector('[data-b-stepper="seats"]');
+  const seatInc = seats2.querySelectorAll('button')[1];
+  for(let i=0;i<10;i++) seatInc.click();
+  a(seats2.querySelector('.b-val').textContent === '4', 'child seats clamp at max 4');
+
+  // Calendly fallback: when window.Calendly is missing, details are not lost
+  let opened = null;
+  site.window.Calendly = undefined;
+  site.window.open = (u)=>{ opened = u; return null; };
+  d.querySelector('[data-b-next]').click(); // re-submit from step 3 (still filled)
+  a(opened === site.content.contact.calendlyUrl, 'fallback opens calendly url in new tab');
+  a(d.querySelector('[data-b-err]').textContent.length > 0, 'fallback shows a recovery message');
   done();
 });
