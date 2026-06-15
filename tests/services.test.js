@@ -13,6 +13,8 @@ a(c.nav.some(n => n.href === '#services'), 'nav has a Services link');
 const site = loadSite();
 site.ready().then(() => {
   const d = site.document;
-  a(true, 'site boots');
+  a(!!d.querySelector('#services'), 'services section present');
+  a(!!d.querySelector('#services .services-grid'), 'services grid present');
+  a(d.querySelector('#services [data-list="services.items"]') !== null, 'grid is the services list container');
   done();
 });
