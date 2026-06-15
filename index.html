@@ -1025,9 +1025,53 @@ function initBooking(){
   });
   back.addEventListener('click', () => { if(step > 1) show(step - 1); });
 
-  // placeholders filled in later tasks:
-  function collect(){ return {}; }
-  function renderReview(){}
+  function stepVal(k){ const s=form.querySelector(`[data-b-stepper="${k}"]`); return s?+s.dataset.val:0; }
+  function collect(){
+    const stops = [...stopsHost.querySelectorAll('input')].map(i=>i.value.trim()).filter(Boolean);
+    const seats = stepVal('seats');
+    return {
+      service: $('[data-b-service]').value,
+      pickup: $('[data-b-pickup]').value.trim(),
+      stops,
+      dropoff: isHourly() ? '' : $('[data-b-dropoff]').value.trim(),
+      when: $('[data-b-when]').value.replace('T',' '),
+      vehicle: $('[data-b-vehicle]').value,
+      hours: isHourly() ? Math.max((CONTENT.rates&&CONTENT.rates.minimumHours)||4, Math.floor(+$('[data-b-hours]').value||0)) : '',
+      flight: /airport/i.test($('[data-b-service]').value) ? $('[data-b-flight]').value.trim() : '',
+      pax: stepVal('pax'), bags: stepVal('bags'),
+      seats, seatType: seats>0 ? $('[data-b-seattype]').value : '',
+      accessible: $('[data-b-accessible]').checked ? 'Yes' : 'No',
+      name: $('[data-b-name]').value.trim(),
+      email: $('[data-b-email]').value.trim(),
+      phone: $('[data-b-phone]').value.trim(),
+      notes: $('[data-b-notes]').value.trim(),
+    };
+  }
+  function summarize(b){
+    const L=[];
+    L.push('Service: '+b.service);
+    L.push('Pick-up: '+b.pickup);
+    b.stops.forEach(s=>L.push('Stop: '+s));
+    if(b.dropoff) L.push('Drop-off: '+b.dropoff);
+    L.push('Date/Time: '+b.when);
+    L.push('Vehicle: '+b.vehicle);
+    if(b.hours) L.push('Hours: '+b.hours);
+    if(b.flight) L.push('Flight #: '+b.flight);
+    L.push(`Passengers: ${b.pax} | Luggage: ${b.bags} | Child seats: ${b.seats}${b.seatType?` (${b.seatType})`:''} | Accessible: ${b.accessible}`);
+    if(b.notes) L.push('Notes: '+b.notes);
+    return L.join('\n');
+  }
+  function renderReview(){ $('[data-b-review]').textContent = summarize(collect()); }
+  function submitBooking(b){
+    const summary = summarize(b);
+    const url = (CONTENT.contact && CONTENT.contact.calendlyUrl) || '';
+    const prefill = { name: b.name, email: b.email, customAnswers: { a1: summary } };
+    if(window.Calendly && url){ window.Calendly.initPopupWidget({ url, prefill }); return; }
+    // fallback: copy details + open scheduling link in a new tab
+    try{ navigator.clipboard && navigator.clipboard.writeText(summary); }catch(e){}
+    errBox.textContent = 'Your trip details are copied — paste them into the booking notes.';
+    if(url) window.open(url, '_blank');
+  }
   function updateEstimate(){
     const est = $('[data-b-estimate]'); const r = (CONTENT.rates)||{};
     if(isHourly()){

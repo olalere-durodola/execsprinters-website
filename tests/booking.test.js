@@ -71,5 +71,22 @@ site.ready().then(() => {
   a(/\$900\.00/.test(est.textContent), 'hourly base 6×150 = $900.00');
   setSvc('From Airport');
   a(/confirmed at booking/i.test(est.textContent), 'non-hourly shows fare-confirmed copy');
+  // fill a full point-to-point booking and submit from step 3
+  setSvc('Point-to-Point');
+  d.querySelector('[data-b-pickup]').value='DFW Terminal D';
+  d.querySelector('[data-b-dropoff]').value='Legacy West, Plano';
+  d.querySelector('[data-b-when]').value='2099-02-03T14:30';
+  d.querySelector('[data-b-next]').click(); // ->2
+  d.querySelector('[data-b-next]').click(); // ->3
+  a(d.querySelector('[data-b-review]').textContent.includes('DFW Terminal D'), 'review shows pickup');
+  d.querySelector('[data-b-name]').value='Jane Exec';
+  d.querySelector('[data-b-email]').value='jane@corp.com';
+  d.querySelector('[data-b-phone]').value='8175551234';
+  d.querySelector('[data-b-next]').click(); // submit
+  const call = site.window.__calendlyCalls.pop();
+  a(call && call.url === site.content.contact.calendlyUrl, 'Calendly opened with configured url');
+  a(call.prefill.name === 'Jane Exec' && call.prefill.email === 'jane@corp.com', 'name/email prefilled');
+  a(/Pick-up: DFW Terminal D/.test(call.prefill.customAnswers.a1), 'summary in customAnswers.a1');
+  a(/Drop-off: Legacy West/.test(call.prefill.customAnswers.a1), 'summary includes drop-off');
   done();
 });
