@@ -953,26 +953,8 @@ function startParallax(){
   })();
 }
 
-/* ---------- quote calculator (rates from content.json) ---------- */
+/* ---------- currency helper (used by the booking estimate) ---------- */
 function money(n){return '$'+n.toLocaleString('en-US',{minimumFractionDigits:2,maximumFractionDigits:2});}
-function calcQuote(){
-  const rates = (CONTENT && CONTENT.rates) || {};
-  const RATE = +rates.hourly || 150;
-  const MIN  = +rates.minimumHours || 4;
-  const TAX  = (+rates.salesTaxPercent || 0)/100;
-  const GRAT = (+rates.gratuityPercent || 0)/100;
-  let hrs=Math.floor(parseFloat(document.getElementById('q-hrs').value)||MIN);
-  if(hrs<MIN){hrs=MIN;document.getElementById('q-hrs').value=MIN;}
-  const base=hrs*RATE, tax=base*TAX, total=base+tax, grat=base*GRAT;
-  document.getElementById('q-base-lbl').textContent='Base ('+hrs+' hrs × $'+RATE+')';
-  document.getElementById('q-base').textContent=money(base);
-  document.getElementById('q-tax-lbl').textContent='Sales tax ('+(rates.salesTaxPercent||0)+'%)';
-  document.getElementById('q-tax').textContent=money(tax);
-  document.getElementById('q-price').textContent=money(total);
-  document.getElementById('q-grat-lbl').textContent='+ Gratuity ('+(rates.gratuityPercent||0)+'%)';
-  document.getElementById('q-grat').textContent=money(grat);
-  document.getElementById('q-out').classList.add('show');
-}
 function openCal(e){
   if(e)e.preventDefault();
   const url=(CONTENT&&CONTENT.contact&&CONTENT.contact.calendlyUrl)||'';
@@ -1085,7 +1067,7 @@ function initBooking(){
         `<div class="line"><span class="lbl" style="color:var(--paper)">Total</span><span class="price">${money(total)}</span></div>`+
         `<div class="grat"><div class="line"><span class="lbl">+ Gratuity (${r.gratuityPercent||0}%)</span><span class="val">${money(grat)}</span></div></div>`;
     } else {
-      est.innerHTML = `<div class="line"><span class="lbl" style="color:var(--paper)">Estimate</span><span class="val">Fare confirmed at booking</span></div>`;
+      est.innerHTML = `<div class="line" style="justify-content:center"><span class="val">Fare confirmed at booking</span></div>`;
     }
     est.classList.add('show');
   }
