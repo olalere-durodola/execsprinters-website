@@ -1039,6 +1039,28 @@ function initBooking(){
   }
   $('[data-b-service]').addEventListener('change', syncConditional);
   syncConditional();
+
+  // steppers
+  form.querySelectorAll('[data-b-stepper]').forEach(s => {
+    const min = +s.dataset.min || 0;
+    let val = +s.dataset.val || min;
+    s.innerHTML = `<button type="button" aria-label="decrease">−</button><span class="b-val">${val}</span><button type="button" aria-label="increase">+</button>`;
+    const out = s.querySelector('.b-val');
+    const set = v => { val = Math.max(min, v); out.textContent = val; s.dataset.val = val;
+      if(s.dataset.bStepper === 'seats'){ $('[data-b-seattype-wrap]').hidden = val === 0; } };
+    s.querySelectorAll('button')[0].addEventListener('click', () => set(val - 1));
+    s.querySelectorAll('button')[1].addEventListener('click', () => set(val + 1));
+  });
+  // add / remove stops
+  const stopsHost = $('[data-b-stops]');
+  $('[data-b-addstop]').addEventListener('click', () => {
+    const max = (CONTENT.booking && CONTENT.booking.maxStops) || 3;
+    if(stopsHost.children.length >= max){ errBox.textContent = `Up to ${max} stops.`; return; }
+    const row = document.createElement('div'); row.className = 'field';
+    row.innerHTML = `<label>Stop</label><input type="text" placeholder="Add a stop">`;
+    stopsHost.appendChild(row);
+  });
+
   window.__booking = { show, validate, collect, isHourly };  // test hook
   show(1);
 }

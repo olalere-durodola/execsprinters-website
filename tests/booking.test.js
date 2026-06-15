@@ -47,5 +47,21 @@ site.ready().then(() => {
   a(!d.querySelector('[data-b-flight-wrap]').hidden, 'flight shown for airport');
   a(d.querySelector('[data-b-hours-wrap]').hidden, 'hours hidden for airport');
   a(!d.querySelector('[data-b-dropoff-wrap]').hidden, 'drop-off shown for airport');
+  const pax = d.querySelector('[data-b-stepper="pax"]');
+  a(pax.querySelectorAll('button').length === 2, 'stepper rendered with two buttons');
+  const inc = pax.querySelectorAll('button')[1];
+  inc.click(); inc.click();
+  a(pax.querySelector('.b-val').textContent === '3', 'passenger stepper increments to 3');
+  // min clamp
+  const seats = d.querySelector('[data-b-stepper="seats"]');
+  seats.querySelectorAll('button')[0].click();
+  a(seats.querySelector('.b-val').textContent === '0', 'seats clamp at min 0');
+  // seat type reveal when seats > 0
+  seats.querySelectorAll('button')[1].click();
+  a(!d.querySelector('[data-b-seattype-wrap]').hidden, 'seat type appears when seats > 0');
+  // add stop
+  const before = d.querySelectorAll('[data-b-stops] input').length;
+  d.querySelector('[data-b-addstop]').click();
+  a(d.querySelectorAll('[data-b-stops] input').length === before + 1, 'add stop adds a field');
   done();
 });
