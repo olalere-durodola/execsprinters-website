@@ -327,6 +327,28 @@ header.scrolled{top:0}
   .utility .u-right{display:none}
   .utility .u-left{gap:18px}
 }
+/* booking form */
+.booking .b-head{max-width:46ch;margin-bottom:26px}
+.booking .b-head .sub{color:rgba(245,241,234,.7)}
+.b-progress{display:flex;gap:10px;margin-bottom:26px}
+.b-dot{width:34px;height:3px;border-radius:3px;background:rgba(245,241,234,.2);transition:.3s}
+.b-dot.is-active{background:var(--bronze-2)}
+.b-step{border:none;display:none}
+.b-step.is-active{display:block;animation:rise .4s ease}
+.b-step legend{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--bronze-2);margin-bottom:16px}
+.booking .field label{color:rgba(245,241,234,.55)}
+.b-link{background:none;border:none;color:var(--bronze-2);font-family:'JetBrains Mono';font-size:12px;cursor:pointer;padding:6px 0;letter-spacing:.04em}
+.b-stepper{display:flex;align-items:center;border:1px solid rgba(245,241,234,.18)}
+.b-stepper button{flex:0 0 46px;height:46px;background:rgba(255,255,255,.04);border:none;color:var(--paper);font-size:18px;cursor:pointer}
+.b-stepper button:hover{background:rgba(255,255,255,.09)}
+.b-stepper .b-val{flex:1;text-align:center;font-family:'Fraunces';font-size:18px}
+.b-toggle{display:flex;align-items:center;gap:12px;margin-top:14px;color:rgba(245,241,234,.8);font-size:14px;cursor:pointer}
+.b-toggle input{width:auto}
+.b-review{margin-top:18px;padding:16px;border:1px dashed rgba(245,241,234,.22);font-family:'JetBrains Mono';font-size:12px;line-height:1.9;color:rgba(245,241,234,.8);white-space:pre-wrap}
+.b-estimate{display:none}.b-estimate.show{display:block}
+.b-err{color:#e8a07a;font-family:'JetBrains Mono';font-size:11.5px;min-height:16px;margin:10px 0 0;letter-spacing:.03em}
+.b-nav{display:flex;gap:12px;margin-top:18px}
+.b-nav .btn{flex:1;justify-content:center}
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}
   .reveal{opacity:1;transform:none}.divider::after{transform:scaleX(1)}
@@ -334,6 +356,7 @@ header.scrolled{top:0}
   .preloader{display:none!important}
   .marquee-track{animation:none!important}
   .pl-bar i{width:100%}
+  .b-step.is-active{animation:none}
 }
 </style>
 <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
@@ -500,39 +523,89 @@ header.scrolled{top:0}
   </div>
 </section>
 
-<!-- QUOTE -->
-<section class="quote" id="quote">
+<!-- BOOKING -->
+<section class="quote booking" id="quote">
   <div class="wrap">
     <div class="quote-inner reveal">
-      <div class="quote-grid">
-        <div>
-          <span class="eyebrow" data-t="quote.eyebrow">INSTANT ESTIMATE</span>
-          <h2 data-t="quote.heading">Your rate, <em>fixed at booking.</em></h2>
-          <p class="sub" data-t="quote.sub">$150 per hour · four-hour minimum · no surge, no surprises. Private — no details required to see a number.</p>
-        </div>
-        <div class="qform">
-          <div class="field"><label>Pickup location</label><input id="q-from" type="text" placeholder="DFW Airport, Terminal D"></div>
-          <div class="field"><label>Drop-off</label><input id="q-to" type="text" placeholder="Legacy West, Plano"></div>
-          <div class="field-row">
-            <div class="field"><label>Vehicle</label>
-              <select id="q-veh"><option>Executive Sprinter</option><option>Lounge Sprinter</option></select>
-            </div>
-            <div class="field"><label id="q-hrs-lbl">Hours (4 min)</label><input id="q-hrs" type="number" value="4" min="4" step="1"></div>
-          </div>
-          <button class="btn qbtn" onclick="calcQuote()">Calculate estimate →</button>
-          <div class="estimate" id="q-out">
-            <div class="line"><span class="lbl" id="q-base-lbl">Base</span><span class="val" id="q-base">$0.00</span></div>
-            <div class="line"><span class="lbl" id="q-tax-lbl">Sales tax</span><span class="val" id="q-tax">$0.00</span></div>
-            <div class="rule"></div>
-            <div class="line"><span class="lbl" style="color:var(--paper)">Total</span><span class="price" id="q-price">$0.00</span></div>
-            <div class="grat">
-              <div class="line"><span class="lbl" id="q-grat-lbl">+ Gratuity</span><span class="val" id="q-grat">$0.00</span></div>
-              <div class="note">Customary gratuity, paid separately on top of the total</div>
-            </div>
-            <a href="#" class="btn qcal" onclick="openCal(event)">Book your time <span class="arw">→</span></a>
-          </div>
-        </div>
+      <div class="b-head">
+        <span class="eyebrow" data-t="booking.eyebrow">Reserve</span>
+        <h2 data-t="booking.heading">Reserve your <em>Sprinter.</em></h2>
+        <p class="sub" data-t="booking.sub"></p>
       </div>
+
+      <div class="b-progress" aria-hidden="true">
+        <span class="b-dot is-active" data-step="1"></span>
+        <span class="b-dot" data-step="2"></span>
+        <span class="b-dot" data-step="3"></span>
+      </div>
+
+      <form class="b-form" novalidate>
+        <!-- STEP 1 -->
+        <fieldset class="b-step is-active" data-step="1">
+          <legend>Step 1 · Ride Info</legend>
+          <div class="field"><label>Service Type</label>
+            <select data-b-service></select></div>
+          <div class="field"><label>Pick-Up Location</label>
+            <input type="text" data-b-pickup placeholder="DFW Airport, Terminal D" required></div>
+          <div data-b-stops></div>
+          <button type="button" class="b-link" data-b-addstop>+ Add stop</button>
+          <div class="field" data-b-dropoff-wrap><label>Drop-Off Location</label>
+            <input type="text" data-b-dropoff placeholder="Legacy West, Plano"></div>
+          <div class="field-row">
+            <div class="field"><label>Date &amp; Time</label>
+              <input type="datetime-local" data-b-when required></div>
+            <div class="field"><label>Vehicle</label>
+              <select data-b-vehicle></select></div>
+          </div>
+          <div class="field-row">
+            <div class="field" data-b-hours-wrap hidden><label data-b-hours-lbl>Hours (4 min)</label>
+              <input type="number" data-b-hours min="4" value="4" step="1"></div>
+            <div class="field" data-b-flight-wrap hidden><label>Flight # (optional)</label>
+              <input type="text" data-b-flight placeholder="AA1423"></div>
+          </div>
+        </fieldset>
+
+        <!-- STEP 2 -->
+        <fieldset class="b-step" data-step="2">
+          <legend>Step 2 · Passengers &amp; Extras</legend>
+          <div class="field-row">
+            <div class="field"><label>Passengers</label>
+              <div class="b-stepper" data-b-stepper="pax" data-min="1" data-val="1"></div></div>
+            <div class="field"><label>Luggage</label>
+              <div class="b-stepper" data-b-stepper="bags" data-min="0" data-val="0"></div></div>
+          </div>
+          <div class="field"><label>Child Seats</label>
+            <div class="b-stepper" data-b-stepper="seats" data-min="0" data-val="0"></div></div>
+          <div class="field" data-b-seattype-wrap hidden><label>Child Seat Type</label>
+            <select data-b-seattype></select></div>
+          <label class="b-toggle"><input type="checkbox" data-b-accessible>
+            <span>Wheelchair-accessible vehicle needed</span></label>
+        </fieldset>
+
+        <!-- STEP 3 -->
+        <fieldset class="b-step" data-step="3">
+          <legend>Step 3 · Your Details</legend>
+          <div class="field"><label>Full Name</label>
+            <input type="text" data-b-name required></div>
+          <div class="field-row">
+            <div class="field"><label>Email</label>
+              <input type="email" data-b-email required></div>
+            <div class="field"><label>Phone</label>
+              <input type="tel" data-b-phone required></div>
+          </div>
+          <div class="field"><label>Notes (optional)</label>
+            <textarea data-b-notes rows="2"></textarea></div>
+          <div class="b-review" data-b-review></div>
+        </fieldset>
+
+        <!-- estimate + nav -->
+        <div class="estimate b-estimate" data-b-estimate></div>
+        <div class="b-err" data-b-err role="alert" aria-live="polite"></div>
+        <div class="b-nav">
+          <button type="button" class="btn btn-ghost" data-b-back hidden>← Back</button>
+          <button type="button" class="btn qbtn" data-b-next>Continue →</button>
+        </div>
+      </form>
     </div>
   </div>
 </section>
@@ -906,9 +979,6 @@ function boot(){
     .then(res=>{ if(!res.ok) throw new Error('content.json not found'); return res.json(); })
     .then(data=>{
       CONTENT=data;
-      const min=(data.rates&&data.rates.minimumHours)||4;
-      const hf=document.getElementById('q-hrs'); if(hf){hf.value=min;hf.min=min;}
-      const hl=document.getElementById('q-hrs-lbl'); if(hl) hl.textContent='Hours ('+min+' min)';
       applyContent();
     })
     .catch(err=>{

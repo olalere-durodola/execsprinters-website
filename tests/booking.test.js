@@ -11,4 +11,13 @@ a(typeof c.booking.maxStops === 'number', 'maxStops is a number');
 a(typeof c.booking.heading === 'string' && typeof c.booking.sub === 'string', 'booking heading/sub present');
 a(c.quote === undefined, 'old quote block removed');
 
-done();
+const site = loadSite();
+site.ready().then(() => {
+  const d = site.document;
+  a(!!d.querySelector('#quote.booking'), 'booking section present with id=quote');
+  a(d.querySelectorAll('#quote .b-step').length === 3, 'three step panels');
+  a(d.querySelectorAll('#quote .b-progress .b-dot').length === 3, 'progress has 3 dots');
+  a(!!d.querySelector('#quote [data-b-next]') && !!d.querySelector('#quote [data-b-back]'), 'has next/back buttons');
+  a(!!d.querySelector('#quote select[data-b-service]'), 'service type select present');
+  done();
+});
