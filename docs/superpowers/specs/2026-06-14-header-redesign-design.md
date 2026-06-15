@@ -37,8 +37,9 @@ markup or JS-logic changes; the existing scroll handler that toggles `header.scr
 - `header`: remove `mix-blend-mode:difference`; add persistent
   `background:rgba(20,16,10,.55); backdrop-filter:blur(12px); border-bottom:1px solid rgba(245,241,234,.10)`.
   Keep `position:fixed; z-index:50; transition; top:40px`.
-- `.utility`: remove `mix-blend-mode:difference`; add the same dark background + blur and a
-  hairline `border-bottom` so utility + nav read as one continuous dark bar. Keep `.utility.hide`
+- `.utility`: remove `mix-blend-mode:difference`; add the same dark background + blur (NO
+  bottom border — it flows directly into the nav, which carries the single bottom hairline, so
+  the two dark rows read as one continuous bar with no double line). Keep `.utility.hide`
   (collapse on scroll) and the `color:#fff` text.
 - `header.scrolled`: replace the old paper/light rule with a darker, more opaque scrim
   (`background:rgba(20,16,10,.80); backdrop-filter:blur(14px); border-bottom:1px solid rgba(245,241,234,.12)`),
