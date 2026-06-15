@@ -156,7 +156,7 @@ header.scrolled .menu-btn{color:var(--ink);mix-blend-mode:normal}
 /* quote — quieter, paper */
 .quote{padding:0 0 120px}
 .quote-inner{background:var(--ink);color:var(--paper);padding:clamp(48px,7vw,90px);position:relative;overflow:hidden}
-.quote-inner::before{content:"";position:absolute;top:0;right:0;width:40%;height:100%;
+.quote-inner::before{content:"";position:absolute;top:0;right:0;width:40%;height:100%;pointer-events:none;
   background:radial-gradient(circle at 80% 30%,rgba(184,133,71,0.25),transparent 70%)}
 .quote-grid{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;position:relative}
 .quote h2{font-size:clamp(30px,4vw,52px);font-weight:300;color:var(--paper);margin:18px 0 20px}
@@ -328,7 +328,7 @@ header.scrolled{top:0}
   .utility .u-left{gap:18px}
 }
 /* ===== booking form — two-column, dark, premium ===== */
-.b-grid{display:grid;grid-template-columns:0.82fr 1fr;gap:clamp(36px,5vw,76px);align-items:start}
+.b-grid{display:grid;grid-template-columns:0.82fr 1fr;gap:clamp(36px,5vw,76px);align-items:start;position:relative;z-index:1}
 .b-aside,.b-main{min-width:0}            /* prevent grid blow-out from intrinsic input widths */
 /* left rail: pitch + live estimate + assurances */
 .b-aside .b-head{margin-bottom:24px}
