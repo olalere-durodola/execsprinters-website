@@ -53,6 +53,33 @@ That's it. You only ever edit through `admin.html` and re-upload.
 
 ---
 
+## Booking & payment setup (Calendly) — one-time
+
+Your site has a 3-step **Reserve** form. When a customer finishes it, the site opens
+your **Calendly** so they can pick a time and pay — and you receive the full trip details.
+
+For this to work, set up your Calendly booking event **once**:
+
+1. In Calendly, open (or create) the event customers book — e.g. "Reserve a Sprinter".
+2. **Turn on payments:** in that event's settings, enable **Collect Payments**
+   (connect Stripe or PayPal). This is how the customer pays at booking.
+3. **Add one custom question** to the event — call it something like **"Trip details"**.
+   The site automatically fills this with the full reservation (service type, pick-up,
+   stops, drop-off, date/time, vehicle, passengers, luggage, child seats, accessibility,
+   flight #, and notes). You don't have to ask for any of that separately.
+4. Make sure the booking link in the editor matches this event:
+   **admin.html → Contact & booking → Calendly booking link**.
+
+That's all. Every reservation then arrives in Calendly with payment + a complete
+trip summary in the "Trip details" answer.
+
+**To change what the form offers** (service types, child-seat types, number of stops,
+or the hourly rate used for the live estimate), use the editor:
+- **Booking form** section → service types, child seat types, max stops
+- **Pricing** section → hourly rate, minimum hours, tax
+
+---
+
 ## Want to preview before publishing?
 
 Click **Preview site ↗** at the top of the editor. Because of browser security,
@@ -72,6 +99,8 @@ normal. The live Cloudflare site always shows the real, updated version.
 | Add/remove a service area | **Service areas** |
 | Change the accent color | **Colors & branding** → Accent (bronze) |
 | Edit the booking link | **Contact & booking** → Calendly link |
+| Add/remove a service type | **Booking form** → Service types |
+| Change child-seat options or max stops | **Booking form** |
 
 ---
 

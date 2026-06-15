@@ -45,8 +45,8 @@
 
   "hero": {
     "eyebrow": "Dallas–Fort Worth · Executive Transportation",
-    "headlineLine1": "Arrive the way you",
-    "headlineLine2": "*intend to.*",
+    "headlineLine1": "Arrive",
+    "headlineLine2": "*Flawless*",
     "ctaPrimary": "Request a quote",
     "image": "images/hero.jpg",
     "imageAlt": "Black Mercedes-Benz Sprinter on the apron at a DFW airport terminal at golden hour",
@@ -147,10 +147,13 @@
     "role": "VP Operations · Fortune 500 Energy"
   },
 
-  "quote": {
-    "eyebrow": "Instant Estimate",
-    "heading": "Your rate, *fixed at booking.*",
-    "sub": "$150 per hour · four-hour minimum · no surge, no surprises. Private — no details required to see a number."
+  "booking": {
+    "eyebrow": "Reserve",
+    "heading": "Reserve your *Sprinter.*",
+    "sub": "$150 per hour · four-hour minimum · no surge, no surprises. Tell us the trip — then pick a time and pay securely.",
+    "serviceTypes": ["From Airport", "To Airport", "Point-to-Point", "Hourly / As Directed"],
+    "childSeatTypes": ["Infant", "Convertible", "Booster"],
+    "maxStops": 3
   },
 
   "areas": {
