@@ -182,10 +182,13 @@ const SCHEMA = [
     {t:'text', p:'testimonial.author', label:'Author name'},
     {t:'text', p:'testimonial.role', label:'Author role / company'},
   ]},
-  { title:'Quote section text', note:'headline above the calculator', fields:[
-    {t:'text', p:'quote.eyebrow', label:'Small label'},
-    {t:'text', p:'quote.heading', label:'Heading', hint:'use *asterisks* for accent'},
-    {t:'textarea', p:'quote.sub', label:'Sub text'},
+  { title:'Booking form', note:'headline, service types, options', fields:[
+    {t:'text', p:'booking.eyebrow', label:'Small label'},
+    {t:'text', p:'booking.heading', label:'Heading', hint:'use *asterisks* for accent'},
+    {t:'textarea', p:'booking.sub', label:'Sub text'},
+    {t:'list-string', p:'booking.serviceTypes', label:'Service types', itemLabel:'Service'},
+    {t:'list-string', p:'booking.childSeatTypes', label:'Child seat types', itemLabel:'Type'},
+    {t:'number', p:'booking.maxStops', label:'Max extra stops'},
   ]},
   { title:'Service areas', note:'the list of areas served', fields:[
     {t:'text', p:'areas.eyebrow', label:'Small label'},
