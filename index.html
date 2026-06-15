@@ -1106,7 +1106,7 @@ function initBooking(){
       dropoff: isHourly() ? '' : $('[data-b-dropoff]').value.trim(),
       when: $('[data-b-when]').value.replace('T',' '),
       vehicle: $('[data-b-vehicle]').value,
-      hours: isHourly() ? Math.max((CONTENT.rates&&CONTENT.rates.minimumHours)||4, Math.floor(+$('[data-b-hours]').value||0)) : '',
+      hours: /airport/i.test($('[data-b-service]').value) ? '' : Math.max((CONTENT.rates&&CONTENT.rates.minimumHours)||4, Math.floor(+$('[data-b-hours]').value||0)),
       flight: /airport/i.test($('[data-b-service]').value) ? $('[data-b-flight]').value.trim() : '',
       pax: stepVal('pax'), bags: stepVal('bags'),
       seats, seatType: seats>0 ? $('[data-b-seattype]').value : '',
@@ -1145,19 +1145,24 @@ function initBooking(){
   }
   function updateEstimate(){
     const est = document.querySelector('#quote [data-b-estimate]'); const r = (CONTENT.rates)||{};
-    if(isHourly()){
-      const RATE=+r.hourly||150, MIN=+r.minimumHours||4, TAX=(+r.salesTaxPercent||0)/100, GRAT=(+r.gratuityPercent||0)/100;
-      let hrs=Math.floor(parseFloat($('[data-b-hours]').value)||MIN); if(hrs<MIN){hrs=MIN; $('[data-b-hours]').value=MIN;}
-      const base=hrs*RATE, tax=base*TAX, total=base+tax, grat=base*GRAT;
-      est.innerHTML =
-        `<div class="line"><span class="lbl">Base (${hrs} hrs × $${RATE})</span><span class="val">${money(base)}</span></div>`+
-        `<div class="line"><span class="lbl">Sales tax (${r.salesTaxPercent||0}%)</span><span class="val">${money(tax)}</span></div>`+
-        `<div class="rule"></div>`+
-        `<div class="line"><span class="lbl" style="color:var(--paper)">Total</span><span class="price">${money(total)}</span></div>`+
-        `<div class="grat"><div class="line"><span class="lbl">+ Gratuity (${r.gratuityPercent||0}%)</span><span class="val">${money(grat)}</span></div></div>`;
+    const airport = /airport/i.test($('[data-b-service]').value);
+    const RATE=+r.hourly||150, MIN=+r.minimumHours||4, TAX=(+r.salesTaxPercent||0)/100, GRAT=(+r.gratuityPercent||0)/100;
+    let base, baseLabel;
+    if(airport){
+      base = +r.airportFlat||0;
+      baseLabel = 'airport flat rate';
     } else {
-      est.innerHTML = `<div class="line" style="justify-content:center"><span class="val">Fare confirmed at booking</span></div>`;
+      let hrs=Math.floor(parseFloat($('[data-b-hours]').value)||MIN); if(hrs<MIN){hrs=MIN; $('[data-b-hours]').value=MIN;}
+      base = hrs*RATE;
+      baseLabel = `${hrs} hrs × $${RATE}`;
     }
+    const tax=base*TAX, grat=base*GRAT, total=base+tax+grat;
+    est.innerHTML =
+      `<div class="line"><span class="lbl">Base (${baseLabel})</span><span class="val">${money(base)}</span></div>`+
+      `<div class="line"><span class="lbl">Sales tax (${r.salesTaxPercent||0}%)</span><span class="val">${money(tax)}</span></div>`+
+      `<div class="line"><span class="lbl">Gratuity (${r.gratuityPercent||0}%)</span><span class="val">${money(grat)}</span></div>`+
+      `<div class="rule"></div>`+
+      `<div class="line"><span class="lbl" style="color:var(--paper)">Total</span><span class="price">${money(total)}</span></div>`;
     est.classList.add('show');
   }
   $('[data-b-hours]').addEventListener('input', updateEstimate);
@@ -1165,7 +1170,7 @@ function initBooking(){
     const v = $('[data-b-service]').value;
     const hourly = /hourly/i.test(v);
     const airport = /airport/i.test(v);
-    $('[data-b-hours-wrap]').hidden = !hourly;
+    $('[data-b-hours-wrap]').hidden = airport;        // hours for hourly + point-to-point; airport is flat
     $('[data-b-flight-wrap]').hidden = !airport;
     $('[data-b-dropoff-wrap]').hidden = hourly;
     updateEstimate();

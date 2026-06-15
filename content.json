@@ -21,7 +21,8 @@
     "hourly": 150,
     "minimumHours": 4,
     "salesTaxPercent": 8.25,
-    "gratuityPercent": 20
+    "gratuityPercent": 20,
+    "airportFlat": 250
   },
 
   "theme": {
