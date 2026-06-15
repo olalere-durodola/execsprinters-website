@@ -173,6 +173,18 @@ const SCHEMA = [
       ]},
     ]},
   ]},
+  { title:'Services', note:'the service cards', fields:[
+    {t:'text', p:'services.eyebrow', label:'Small label'},
+    {t:'text', p:'services.heading', label:'Heading', hint:'use *asterisks* for accent'},
+    {t:'textarea', p:'services.sub', label:'Tagline'},
+    {t:'text', p:'services.cta', label:'Card button text'},
+    {t:'list', p:'services.items', label:'Service cards', itemLabel:'Service', item:[
+      {t:'text', k:'title', label:'Title'},
+      {t:'textarea', k:'description', label:'Description'},
+      {t:'list-string', k:'features', label:'Features', itemLabel:'Feature'},
+      {t:'text', k:'price', label:'Price line (optional)'},
+    ]},
+  ]},
   { title:'Trust marquee', note:'the scrolling credentials strip under the hero', fields:[
     {t:'list-string', p:'marquee', label:'Credentials', itemLabel:'Item'},
   ]},
