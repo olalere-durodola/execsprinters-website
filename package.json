@@ -1,0 +1,10 @@
+{
+  "name": "execsprinters-site",
+  "private": true,
+  "scripts": {
+    "test": "node tests/booking.test.js && node tests/regression.test.js"
+  },
+  "devDependencies": {
+    "jsdom": "^24.0.0"
+  }
+}
