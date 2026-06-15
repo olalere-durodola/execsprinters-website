@@ -9,3 +9,6 @@ index.original.backup.html
 .DS_Store
 Thumbs.db
 *.log
+
+# visual-companion brainstorm mockups (local only)
+.superpowers/
