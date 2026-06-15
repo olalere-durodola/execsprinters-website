@@ -924,6 +924,18 @@ function applyContent(){
         </div>
       </div>`).join('');
 
+  // --- services ---
+  const svc=document.querySelector('[data-list="services.items"]');
+  if(svc && Array.isArray(get('services.items')))
+    svc.innerHTML = get('services.items').map(s=>
+      `<article class="service-card reveal">
+        <h3>${fmt(s.title)}</h3>
+        <p>${fmt(s.description)}</p>
+        <ul>${(s.features||[]).map(f=>`<li>${fmt(f)}</li>`).join('')}</ul>
+        ${s.price ? `<div class="svc-price">${fmt(s.price)}</div>` : ''}
+        <a href="#quote" class="link">${fmt((CONTENT.services&&CONTENT.services.cta)||'Reserve')} →</a>
+      </article>`).join('');
+
   // --- service areas ---
   const areas=document.querySelector('[data-list="areas.list"]');
   if(areas && Array.isArray(get('areas.list')))
