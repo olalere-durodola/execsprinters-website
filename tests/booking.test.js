@@ -38,5 +38,14 @@ site.ready().then(() => {
   a(!back.hidden, 'back button visible on step 2');
   back.click();
   a(d.querySelector('[data-step="1"].is-active') !== null, 'back returns to step 1');
+  const svc = d.querySelector('[data-b-service]');
+  const setSvc = v => { svc.value = v; svc.dispatchEvent(new site.window.Event('change')); };
+  setSvc('Hourly / As Directed');
+  a(!d.querySelector('[data-b-hours-wrap]').hidden, 'hours shown for hourly');
+  a(d.querySelector('[data-b-dropoff-wrap]').hidden, 'drop-off hidden for hourly');
+  setSvc('From Airport');
+  a(!d.querySelector('[data-b-flight-wrap]').hidden, 'flight shown for airport');
+  a(d.querySelector('[data-b-hours-wrap]').hidden, 'hours hidden for airport');
+  a(!d.querySelector('[data-b-dropoff-wrap]').hidden, 'drop-off shown for airport');
   done();
 });

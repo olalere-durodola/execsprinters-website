@@ -1028,6 +1028,17 @@ function initBooking(){
   // placeholders filled in later tasks:
   function collect(){ return {}; }
   function renderReview(){}
+  function syncConditional(){
+    const v = $('[data-b-service]').value;
+    const hourly = /hourly/i.test(v);
+    const airport = /airport/i.test(v);
+    $('[data-b-hours-wrap]').hidden = !hourly;
+    $('[data-b-flight-wrap]').hidden = !airport;
+    $('[data-b-dropoff-wrap]').hidden = hourly;
+    if(typeof updateEstimate === 'function') updateEstimate();
+  }
+  $('[data-b-service]').addEventListener('change', syncConditional);
+  syncConditional();
   window.__booking = { show, validate, collect, isHourly };  // test hook
   show(1);
 }
