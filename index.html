@@ -49,26 +49,28 @@ img{display:block;max-width:100%}
   0%{transform:translate(0,0)}16%{transform:translate(-4%,2%)}32%{transform:translate(3%,-3%)}
   48%{transform:translate(-2%,4%)}64%{transform:translate(4%,1%)}80%{transform:translate(-3%,-2%)}100%{transform:translate(0,0)}}
 
-/* nav */
-header{position:fixed;top:0;left:0;right:0;z-index:50;transition:.45s ease;mix-blend-mode:difference}
-header.scrolled{mix-blend-mode:normal;background:rgba(245,241,234,0.82);backdrop-filter:blur(16px);border-bottom:1px solid var(--line)}
-nav{display:flex;align-items:center;justify-content:space-between;height:78px}
-.logo{display:flex;align-items:baseline;gap:10px;font-family:'Fraunces',serif;font-weight:500;font-size:23px;letter-spacing:-0.01em;color:#fff}
-header.scrolled .logo{color:var(--ink)}
-.logo small{font-family:'JetBrains Mono';font-size:8.5px;letter-spacing:0.32em;opacity:.6;font-weight:400;align-self:center}
-.nav-links{display:flex;gap:32px;align-items:center;font-size:13.5px;font-weight:500;color:#fff;mix-blend-mode:difference}
-header.scrolled .nav-links{color:var(--ink-soft);mix-blend-mode:normal}
-.nav-links a{transition:.2s;opacity:.85}.nav-links a:hover{opacity:1}
+/* nav — persistent dark scrim bar */
+header{position:fixed;top:0;left:0;right:0;z-index:50;transition:.45s ease;
+  background:rgba(20,16,10,0.55);backdrop-filter:blur(12px);border-bottom:1px solid rgba(245,241,234,0.10)}
+header.scrolled{background:rgba(20,16,10,0.82);backdrop-filter:blur(14px);border-bottom:1px solid rgba(245,241,234,0.12)}
+header.scrolled nav{height:64px}
+nav{display:flex;align-items:center;justify-content:space-between;height:78px;transition:height .45s ease}
+.logo{display:flex;align-items:baseline;gap:10px;font-family:'Fraunces',serif;font-weight:500;font-size:31px;letter-spacing:-0.01em;color:#fff}
+.logo small{font-family:'JetBrains Mono';font-size:9px;letter-spacing:0.32em;opacity:.6;font-weight:400;align-self:center}
+.nav-links{display:flex;gap:32px;align-items:center;font-size:13.5px;font-weight:500;color:#fff}
+.nav-links a{transition:.2s;opacity:.82}.nav-links a:hover{opacity:1}
 .btn{display:inline-flex;align-items:center;gap:9px;padding:13px 24px;border-radius:2px;font-weight:600;font-size:13.5px;cursor:pointer;border:none;transition:.3s ease;font-family:'Space Grotesk';letter-spacing:0.01em}
 .btn-primary{background:var(--ink);color:var(--paper)}
 .btn-primary:hover{background:var(--bronze)}
+header .btn-primary{background:var(--bronze);color:var(--ink)}
+header .btn-primary:hover{background:var(--bronze-2)}
 .btn-ghost{background:transparent;border:1px solid currentColor;color:inherit}
 .btn-ghost:hover{background:var(--ink);color:var(--paper);border-color:var(--ink)}
 .btn .arw{display:inline-block;transition:transform .3s cubic-bezier(.2,.7,.2,1)}
 .btn:hover .arw{transform:translateX(5px)}
 .btn-lg{padding:17px 32px;font-size:14.5px}
-.menu-btn{display:none;background:none;border:none;color:#fff;font-size:24px;cursor:pointer;mix-blend-mode:difference}
-header.scrolled .menu-btn{color:var(--ink);mix-blend-mode:normal}
+.menu-btn{display:none;background:none;border:none;color:#fff;font-size:24px;cursor:pointer}
+@media(max-width:920px){.logo{font-size:25px}}
 
 /* HERO — full-bleed photo */
 .hero{position:relative;height:100vh;min-height:640px;display:flex;align-items:flex-end;overflow:hidden}
@@ -268,8 +270,9 @@ body.loading{overflow:hidden}
 @keyframes plFill{to{width:100%}}
 
 /* utility bar above the nav */
-.utility{position:fixed;top:0;left:0;right:0;z-index:48;height:40px;display:flex;align-items:center;
-  color:#fff;mix-blend-mode:difference;transition:transform .45s ease,opacity .45s ease}
+.utility{position:fixed;top:0;left:0;right:0;z-index:49;height:40px;display:flex;align-items:center;
+  color:#fff;background:rgba(20,16,10,0.55);backdrop-filter:blur(12px);
+  transition:transform .45s ease,opacity .45s ease}
 .utility.hide{transform:translateY(-100%);opacity:0;pointer-events:none}
 .utility .wrap{display:flex;align-items:center;justify-content:space-between;width:100%;
   font-family:'JetBrains Mono',monospace;font-size:10.5px;letter-spacing:.18em;text-transform:uppercase}
