@@ -329,6 +329,7 @@ header.scrolled{top:0}
 }
 /* ===== booking form — two-column, dark, premium ===== */
 .b-grid{display:grid;grid-template-columns:0.82fr 1fr;gap:clamp(36px,5vw,76px);align-items:start}
+.b-aside,.b-main{min-width:0}            /* prevent grid blow-out from intrinsic input widths */
 /* left rail: pitch + live estimate + assurances */
 .b-aside .b-head{margin-bottom:24px}
 .b-aside .b-head .sub{color:rgba(245,241,234,.7);font-size:16px;max-width:34ch}
@@ -347,10 +348,10 @@ header.scrolled{top:0}
 .b-step{border:none;display:none;padding:0;margin:0}
 .b-step.is-active{display:block;animation:rise .45s ease}
 .b-step legend{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--bronze-2);margin-bottom:18px}
-.b-form .field{margin-bottom:15px}
+.b-form .field{margin-bottom:15px;min-width:0}
 .b-form label{display:block;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.12em;text-transform:uppercase;
   color:rgba(245,241,234,.5);margin-bottom:8px}
-.b-form input,.b-form select,.b-form textarea{width:100%;padding:13px 15px;border-radius:2px;
+.b-form input,.b-form select,.b-form textarea{width:100%;max-width:100%;min-width:0;padding:13px 15px;border-radius:2px;
   background:rgba(255,255,255,0.04);border:1px solid rgba(245,241,234,0.18);color:var(--paper);
   font-family:'Space Grotesk';font-size:14.5px;transition:.25s}
 .b-form textarea{resize:vertical;min-height:56px}
@@ -362,6 +363,7 @@ header.scrolled{top:0}
   background-repeat:no-repeat;background-position:right 15px center}
 .b-form select option{background:var(--ink);color:var(--paper)}
 .b-form .field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.b-form .field-row>.field{min-width:0}
 .b-link{background:none;border:none;color:var(--bronze-2);font-family:'JetBrains Mono';font-size:11.5px;
   cursor:pointer;padding:4px 0 14px;letter-spacing:.05em;text-transform:uppercase;transition:.2s}
 .b-link:hover{color:var(--paper)}
@@ -384,9 +386,14 @@ header.scrolled{top:0}
 .b-nav .btn{flex:1;justify-content:center}
 .b-nav .btn-ghost{color:var(--paper);border-color:rgba(245,241,234,.3)}
 @media(max-width:920px){
-  .b-grid{grid-template-columns:1fr;gap:36px}
-  .b-progress{gap:6px}
+  .b-grid{grid-template-columns:1fr;gap:32px}
+  .booking .quote-inner{padding:34px 22px}
+  .b-progress{gap:8px}
   .b-dot{font-size:10px}
+}
+@media(max-width:560px){
+  .b-form .field-row{grid-template-columns:1fr}
+  .b-dot{flex-direction:column;gap:2px;align-items:flex-start}
 }
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}
