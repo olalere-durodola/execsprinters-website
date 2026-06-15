@@ -38,6 +38,7 @@
 
   "nav": [
     { "label": "Experience", "href": "#experience" },
+    { "label": "About", "href": "#about" },
     { "label": "Services", "href": "#services" },
     { "label": "Fleet", "href": "#fleet" },
     { "label": "Quote", "href": "#quote" },
@@ -99,31 +100,37 @@
     "eyebrow": "The Fleet",
     "heading": "Our Sprinters. *One standard.*",
     "text": "All Mercedes-Benz, maintained to commercial spec and detailed before every ride — sized for the day you're running.",
-    "vehicles": [
-      {
-        "tag": "EXECUTIVE",
-        "name": "Executive Sprinter",
-        "caption": "airport · roadshow · client transfer",
-        "image": "images/executive.jpg",
-        "imageAlt": "ExecSprinters executive Mercedes-Benz Sprinter",
-        "specs": [
-          { "label": "Seats", "value": "Up to 11" },
-          { "label": "Best for", "value": "Teams" },
-          { "label": "Luggage", "value": "Full" }
-        ]
-      },
-      {
-        "tag": "LOUNGE",
-        "name": "Lounge Sprinter",
-        "caption": "events · groups · premium comfort",
-        "image": "images/lounge.jpg",
-        "imageAlt": "ExecSprinters lounge Sprinter interior with captain's chairs",
-        "specs": [
-          { "label": "Seats", "value": "Captain's" },
-          { "label": "Best for", "value": "Comfort" },
-          { "label": "Lighting", "value": "Ambient" }
-        ]
-      }
+    "vehicle": {
+      "tag": "EXECUTIVE",
+      "name": "Mercedes-Benz Sprinter Executive",
+      "image": "images/executive.jpg",
+      "imageAlt": "ExecSprinters executive Mercedes-Benz Sprinter on a downtown street",
+      "stats": [
+        { "label": "Passengers", "value": "Up to 14" },
+        { "label": "Luggage", "value": "Ample space" }
+      ],
+      "amenities": [
+        "Luxury Leather Seating",
+        "Climate Control",
+        "Premium Sound System",
+        "LED Ambient Lighting",
+        "Multiple HD TVs",
+        "WiFi Connectivity",
+        "USB Charging Ports",
+        "Privacy Partitions",
+        "Refreshment Bar",
+        "Tinted Windows"
+      ]
+    }
+  },
+
+  "about": {
+    "eyebrow": "About",
+    "heading": "About *ExecSprinters.*",
+    "tagline": "Your premier choice for luxury Sprinter van transportation.",
+    "paragraphs": [
+      "At ExecSprinters, we redefine executive travel with our fleet of luxury Mercedes-Benz Sprinter vans. Our commitment to excellence, punctuality, and customer satisfaction sets us apart in the luxury transportation industry.",
+      "With years of experience serving corporate executives, special events, and discerning travelers, we understand that your time is valuable and your comfort is paramount."
     ]
   },
 
