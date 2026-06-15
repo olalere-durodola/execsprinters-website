@@ -13,5 +13,8 @@ setTimeout(()=>{
   a(titles.some(t=>/Services/.test(t)),'admin has a Services section');
   const labels=[...d.querySelectorAll('details.sec label')].map(l=>l.textContent);
   a(labels.some(t=>/Service cards/.test(t)),'service cards list editor rendered');
+  a(titles.some(t=>/About/.test(t)),'admin has an About section');
+  a(labels.some(t=>/Premium amenities/.test(t)),'fleet amenities editor rendered');
+  a(labels.some(t=>/Vehicle name/.test(t)),'fleet single-vehicle editor rendered');
   console.log('\n'+(fails?fails+' FAILURE(S)':'ALL CHECKS PASSED'));process.exit(fails?1:0);
 },300);

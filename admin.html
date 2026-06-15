@@ -156,20 +156,24 @@ const SCHEMA = [
       {t:'text', k:'imageAlt', label:'Photo description'},
     ]},
   ]},
-  { title:'Fleet', note:'vehicles', fields:[
+  { title:'Fleet', note:'the featured vehicle + amenities', fields:[
     {t:'text', p:'fleet.eyebrow', label:'Small label'},
     {t:'text', p:'fleet.heading', label:'Heading', hint:'use *asterisks* for accent'},
     {t:'textarea', p:'fleet.text', label:'Intro paragraph'},
-    {t:'list', p:'fleet.vehicles', label:'Vehicles', itemLabel:'Vehicle', item:[
-      {t:'image', k:'image', label:'Photo'},
-      {t:'text', k:'tag', label:'Corner tag', hint:'e.g. EXECUTIVE'},
-      {t:'text', k:'name', label:'Name'},
-      {t:'text', k:'caption', label:'Caption line'},
-      {t:'text', k:'imageAlt', label:'Photo description'},
-      {t:'list', k:'specs', label:'Spec boxes', itemLabel:'Spec', item:[
-        {t:'text', k:'label', label:'Label'}, {t:'text', k:'value', label:'Value'}
-      ]},
+    {t:'image', p:'fleet.vehicle.image', label:'Vehicle photo'},
+    {t:'text', p:'fleet.vehicle.imageAlt', label:'Photo description'},
+    {t:'text', p:'fleet.vehicle.tag', label:'Corner tag', hint:'e.g. EXECUTIVE'},
+    {t:'text', p:'fleet.vehicle.name', label:'Vehicle name'},
+    {t:'list', p:'fleet.vehicle.stats', label:'Headline stats', itemLabel:'Stat', item:[
+      {t:'text', k:'label', label:'Label', hint:'e.g. Passengers'}, {t:'text', k:'value', label:'Value', hint:'e.g. Up to 14'}
     ]},
+    {t:'list-string', p:'fleet.vehicle.amenities', label:'Premium amenities', itemLabel:'Amenity'},
+  ]},
+  { title:'About', note:'the About ExecSprinters section', fields:[
+    {t:'text', p:'about.eyebrow', label:'Small label'},
+    {t:'text', p:'about.heading', label:'Heading', hint:'use *asterisks* for accent'},
+    {t:'text', p:'about.tagline', label:'Tagline'},
+    {t:'list-string', p:'about.paragraphs', label:'Paragraphs', itemLabel:'Paragraph'},
   ]},
   { title:'Services', note:'the service cards', fields:[
     {t:'text', p:'services.eyebrow', label:'Small label'},

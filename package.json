@@ -2,7 +2,7 @@
   "name": "execsprinters-site",
   "private": true,
   "scripts": {
-    "test": "node tests/booking.test.js && node tests/regression.test.js && node tests/admin.test.js && node tests/services.test.js && node tests/services-admin.test.js"
+    "test": "node tests/booking.test.js && node tests/regression.test.js && node tests/admin.test.js && node tests/services.test.js && node tests/services-admin.test.js && node tests/fleet-about.test.js"
   },
   "devDependencies": {
     "jsdom": "^24.0.0"

@@ -131,7 +131,7 @@ header .btn-primary:hover{background:var(--bronze-2)}
 .band.dark .copy p{color:rgba(245,241,234,0.72)}
 .band.dark .copy .link{color:var(--paper)}
 
-/* fleet — two sprinters */
+/* fleet — vehicles */
 .fleet{padding:120px 0}
 .fleet-head{max-width:660px;margin-bottom:64px}
 .fleet-head h2{font-size:clamp(30px,4vw,52px);font-weight:300;margin:18px 0 16px}
@@ -420,6 +420,37 @@ header.scrolled{top:0}
 @media(max-width:920px){.services{padding:80px 0}.services-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:600px){.services-grid{grid-template-columns:1fr}}
 
+/* fleet — single featured vehicle showcase */
+.showcase{display:grid;grid-template-columns:1.05fr 1fr;gap:clamp(36px,4.5vw,56px);align-items:stretch}
+.showcase .pic{position:relative;overflow:hidden;background:var(--ink);min-height:100%}
+.showcase .pic img{width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.2,.7,.2,1)}
+.showcase:hover .pic img{transform:scale(1.04)}
+.showcase .pic .tag{position:absolute;top:20px;left:20px;font-family:'JetBrains Mono';font-size:10.5px;letter-spacing:.1em;color:var(--paper);background:rgba(28,24,18,.7);backdrop-filter:blur(6px);padding:7px 13px;z-index:2}
+.showcase .info{display:flex;flex-direction:column;justify-content:space-between;min-width:0}
+.showcase .info h3{font-size:clamp(26px,3vw,38px);font-weight:400;margin-bottom:22px}
+.stats-row{display:flex;gap:44px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:20px 0;margin-bottom:26px}
+.stats-row .k{font-family:'JetBrains Mono';font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.stats-row .v{font-family:'Fraunces';font-size:24px;margin-top:4px}
+.amen-label{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--bronze);margin-bottom:16px}
+.amenities{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:12px 24px}
+.amenities li{display:flex;align-items:center;gap:11px;font-size:14.5px;color:var(--ink-soft)}
+.amenities li::before{content:"";width:7px;height:7px;background:var(--bronze);transform:rotate(45deg);flex:0 0 auto}
+
+/* about — editorial text block */
+.about{padding:120px 0;background:var(--paper-2)}
+.about-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:80px;align-items:start}
+.about h2{font-size:clamp(28px,3.6vw,46px);font-weight:300;line-height:1.12;margin-top:18px}
+.about h2 em{font-style:italic;color:var(--bronze)}
+.about .tagline{font-family:'Fraunces';font-style:italic;font-size:20px;color:var(--bronze);margin-top:18px;max-width:24ch}
+.about-body{color:var(--ink-soft);font-size:17px;max-width:48ch}
+.about-body p+p{margin-top:18px}
+@media(max-width:920px){
+  .showcase{grid-template-columns:1fr;gap:32px}
+  .showcase .pic{min-height:54vw}
+  .about{padding:80px 0}.about-grid{grid-template-columns:1fr;gap:32px}
+}
+@media(max-width:560px){.amenities{grid-template-columns:1fr}}
+
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}
   .reveal{opacity:1;transform:none}.divider::after{transform:scaleX(1)}
@@ -510,7 +541,7 @@ header.scrolled{top:0}
     </div>
     <div class="reveal lead">
       <div data-list="intro.paragraphs">
-        <p>Two executive Mercedes-Benz Sprinters, chauffeured by professionals and held to a single promise: you arrive together, on time, without managing a thing.</p>
+        <p>Executive Mercedes-Benz Sprinters, chauffeured by professionals and held to a single promise: you arrive together, on time, without managing a thing.</p>
         <p>Airport transfers, scheduled shuttles, and event coordination — reserved in advance, billed on one invoice, watched over by a dispatch team that's awake when you need it.</p>
       </div>
     </div>
@@ -552,6 +583,23 @@ header.scrolled{top:0}
 
 <hr class="divider">
 
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="wrap about-grid">
+    <div class="reveal">
+      <span class="eyebrow" data-t="about.eyebrow">About</span>
+      <h2 data-t="about.heading">About <em>ExecSprinters.</em></h2>
+      <div class="tagline" data-t="about.tagline">Your premier choice for luxury Sprinter van transportation.</div>
+    </div>
+    <div class="about-body reveal" data-list="about.paragraphs">
+      <p>At ExecSprinters, we redefine executive travel with our fleet of luxury Mercedes-Benz Sprinter vans. Our commitment to excellence, punctuality, and customer satisfaction sets us apart in the luxury transportation industry.</p>
+      <p>With years of experience serving corporate executives, special events, and discerning travelers, we understand that your time is valuable and your comfort is paramount.</p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
 <!-- SERVICES -->
 <section class="services" id="services">
   <div class="wrap">
@@ -579,33 +627,25 @@ header.scrolled{top:0}
   <div class="wrap">
     <div class="fleet-head reveal">
       <span class="eyebrow" data-t="fleet.eyebrow">THE FLEET</span>
-      <h2 data-t="fleet.heading">Two Sprinters. <em>One standard.</em></h2>
-      <p data-t="fleet.text">Both Mercedes-Benz, both maintained to commercial spec and detailed before every ride — sized for the day you're running.</p>
+      <h2 data-t="fleet.heading">Our Sprinters. <em>One standard.</em></h2>
+      <p data-t="fleet.text">All Mercedes-Benz, maintained to commercial spec and detailed before every ride — sized for the day you're running.</p>
     </div>
-    <div class="fleet-grid" data-list="fleet.vehicles">
-      <div class="vehicle reveal">
-        <div class="pic"><span class="tag">EXECUTIVE</span><img src="images/executive.jpg" alt=""></div>
-        <div class="body">
-          <h4>Executive Sprinter</h4>
-          <div class="cap">airport · roadshow · client transfer</div>
-          <div class="spec">
-            <div><div class="k">Seats</div><div class="v">Up to 11</div></div>
-            <div><div class="k">Best for</div><div class="v">Teams</div></div>
-            <div><div class="k">Luggage</div><div class="v">Full</div></div>
-          </div>
+    <div class="showcase reveal">
+      <div class="pic"><span class="tag" data-fv-tag>EXECUTIVE</span><img data-fv-img src="images/executive.jpg" alt="ExecSprinters executive Mercedes-Benz Sprinter"></div>
+      <div class="info">
+        <h3 data-fv-name>Mercedes-Benz Sprinter Executive</h3>
+        <div class="stats-row" data-fv-stats>
+          <div><div class="k">Passengers</div><div class="v">Up to 14</div></div>
+          <div><div class="k">Luggage</div><div class="v">Ample space</div></div>
         </div>
-      </div>
-      <div class="vehicle reveal">
-        <div class="pic"><span class="tag">LOUNGE</span><img src="images/lounge.jpg" alt=""></div>
-        <div class="body">
-          <h4>Lounge Sprinter</h4>
-          <div class="cap">events · groups · premium comfort</div>
-          <div class="spec">
-            <div><div class="k">Seats</div><div class="v">Captain's</div></div>
-            <div><div class="k">Best for</div><div class="v">Comfort</div></div>
-            <div><div class="k">Lighting</div><div class="v">Ambient</div></div>
-          </div>
-        </div>
+        <div class="amen-label">Premium Amenities</div>
+        <ul class="amenities" data-fv-amenities>
+          <li>Luxury Leather Seating</li><li>Climate Control</li>
+          <li>Premium Sound System</li><li>LED Ambient Lighting</li>
+          <li>Multiple HD TVs</li><li>WiFi Connectivity</li>
+          <li>USB Charging Ports</li><li>Privacy Partitions</li>
+          <li>Refreshment Bar</li><li>Tinted Windows</li>
+        </ul>
       </div>
     </div>
   </div>
@@ -805,7 +845,7 @@ function renderBooking(){
   const fill = (sel, arr) => { const el=document.querySelector(sel); if(el&&Array.isArray(arr)) el.innerHTML = arr.map(o=>`<option>${fmt(o)}</option>`).join(''); };
   fill('[data-b-service]', b.serviceTypes);
   fill('[data-b-seattype]', b.childSeatTypes);
-  const veh = (CONTENT.fleet&&CONTENT.fleet.vehicles||[]).map(v=>v.name);
+  const veh = (CONTENT.fleet&&CONTENT.fleet.vehicle) ? [CONTENT.fleet.vehicle.name] : [];
   fill('[data-b-vehicle]', veh);
   // keep the hourly minimum label/field in sync with the editable rate
   const min = (CONTENT.rates && CONTENT.rates.minimumHours) || 4;
@@ -881,6 +921,11 @@ function applyContent(){
   if(introP && Array.isArray(get('intro.paragraphs')))
     introP.innerHTML = get('intro.paragraphs').map(p=>`<p>${fmt(p)}</p>`).join('');
 
+  // --- about paragraphs ---
+  const aboutP=document.querySelector('[data-list="about.paragraphs"]');
+  if(aboutP && Array.isArray(get('about.paragraphs')))
+    aboutP.innerHTML = get('about.paragraphs').map(p=>`<p>${fmt(p)}</p>`).join('');
+
   // --- photo bands ---
   const bandsWrap=document.querySelector('[data-list="bands"]');
   if(bandsWrap && Array.isArray(CONTENT.bands))
@@ -898,19 +943,19 @@ function applyContent(){
       </section>`;
     }).join('');
 
-  // --- fleet vehicles ---
-  const fleet=document.querySelector('[data-list="fleet.vehicles"]');
-  if(fleet && Array.isArray(get('fleet.vehicles')))
-    fleet.innerHTML = get('fleet.vehicles').map(v=>
-      `<div class="vehicle reveal">
-        <div class="pic"><span class="tag">${fmt(v.tag)}</span><img src="${v.image||''}" alt="${(v.imageAlt||'').replace(/"/g,'&quot;')}"></div>
-        <div class="body">
-          <h4>${fmt(v.name)}</h4>
-          <div class="cap">${fmt(v.caption)}</div>
-          <div class="spec">${(v.specs||[]).map(sp=>
-            `<div><div class="k">${fmt(sp.label)}</div><div class="v">${fmt(sp.value)}</div></div>`).join('')}</div>
-        </div>
-      </div>`).join('');
+  // --- fleet: single featured vehicle ---
+  const fv = CONTENT.fleet && CONTENT.fleet.vehicle;
+  if(fv){
+    const fimg=document.querySelector('[data-fv-img]'); if(fimg){ if(fv.image)fimg.src=fv.image; if(fv.imageAlt!=null)fimg.alt=fv.imageAlt; }
+    const ftag=document.querySelector('[data-fv-tag]'); if(ftag) ftag.textContent=fv.tag||'';
+    const fname=document.querySelector('[data-fv-name]'); if(fname) fname.innerHTML=fmt(fv.name);
+    const fstats=document.querySelector('[data-fv-stats]');
+    if(fstats && Array.isArray(fv.stats))
+      fstats.innerHTML = fv.stats.map(s=>`<div><div class="k">${fmt(s.label)}</div><div class="v">${fmt(s.value)}</div></div>`).join('');
+    const famen=document.querySelector('[data-fv-amenities]');
+    if(famen && Array.isArray(fv.amenities))
+      famen.innerHTML = fv.amenities.map(a=>`<li>${fmt(a)}</li>`).join('');
+  }
 
   // --- services ---
   const svc=document.querySelector('[data-list="services.items"]');
