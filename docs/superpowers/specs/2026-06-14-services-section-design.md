@@ -6,8 +6,8 @@
 ## 1. Summary
 
 Add an informational **"Our Services"** section to the single-page site: a header plus a
-**3-column card grid** of six services (Airport Transfers, Corporate Transportation,
-Special Events, Wine & Brewery Tours, Point-to-Point, Hourly Charter). Each card shows a
+**3-column card grid** of five services (Airport Transfers, Corporate Transportation,
+Special Events, Point-to-Point, Hourly Charter). Each card shows a
 title, description, feature bullets, an optional price line, and a **"Reserve →"** link
 that smooth-scrolls to the existing booking form (`#quote`). The section is fully
 owner-editable through `content.json` + `admin.html`, consistent with the rest of the site.
@@ -20,7 +20,7 @@ No backend; static site unchanged in architecture.
 | 1 | Relationship to booking | **Informational + scroll to booking.** Cards are marketing; each has a button that scrolls to `#quote`. The booking form keeps its own 4 service types. No data coupling. |
 | 2 | Placement | **After the 3 photo bands, before Fleet.** `id="services"`. |
 | 3 | Navigation | Add **"Services"** link to the top nav (between Experience and Fleet) and to the footer "Service" column. |
-| 4 | Pricing | Per-card **optional free-text** price line (Wine & Brewery omits it). |
+| 4 | Pricing | Per-card **optional free-text** price line (empty string → price line not rendered). |
 | 5 | Card CTA | A **"Reserve →"** link per card scrolling to `#quote`. |
 | 6 | Editability | New `services` block in `content.json`; editable via `admin.html` (add/remove/reorder cards, edit all fields). |
 
@@ -46,10 +46,6 @@ Add a new top-level `services` block:
       "description": "Make your special occasions memorable with our luxury Sprinter van service.",
       "features": ["Weddings & proms", "Anniversaries", "Night-out packages"],
       "price": "$150/hr · 4-hr minimum" },
-    { "title": "Wine & Brewery Tours",
-      "description": "Worry-free wine country and brewery tours with our designated-driver service.",
-      "features": ["Custom itineraries", "Coolers & glassware", "Local expertise"],
-      "price": "" },
     { "title": "Point-to-Point",
       "description": "Direct transportation from your location to your destination with no stops.",
       "features": ["Direct routes", "Fixed pricing", "Express service"],
@@ -164,4 +160,4 @@ changes. Owner can add/remove/reorder cards and features.
 |------|------------|
 | Grid overflow on narrow widths (as happened with booking) | `min-width:0` on grid children; tested at mobile widths |
 | Two pricing sources drift (cards vs hourly rate in `rates`) | Card prices are free-text display only, explicitly decoupled; documented for the owner |
-| Card count not divisible by 3 | 6 cards = clean 3×2; grid handles any count gracefully |
+| Card count not divisible by 3 | 5 cards = 3 + 2; grid handles any count gracefully (cards left-align, no awkward stretch) |
