@@ -327,28 +327,74 @@ header.scrolled{top:0}
   .utility .u-right{display:none}
   .utility .u-left{gap:18px}
 }
-/* booking form */
-.booking .b-head{max-width:46ch;margin-bottom:26px}
-.booking .b-head .sub{color:rgba(245,241,234,.7)}
-.b-progress{display:flex;gap:10px;margin-bottom:26px}
-.b-dot{width:34px;height:3px;border-radius:3px;background:rgba(245,241,234,.2);transition:.3s}
-.b-dot.is-active{background:var(--bronze-2)}
-.b-step{border:none;display:none}
-.b-step.is-active{display:block;animation:rise .4s ease}
-.b-step legend{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--bronze-2);margin-bottom:16px}
-.booking .field label{color:rgba(245,241,234,.55)}
-.b-link{background:none;border:none;color:var(--bronze-2);font-family:'JetBrains Mono';font-size:12px;cursor:pointer;padding:6px 0;letter-spacing:.04em}
-.b-stepper{display:flex;align-items:center;border:1px solid rgba(245,241,234,.18)}
-.b-stepper button{flex:0 0 46px;height:46px;background:rgba(255,255,255,.04);border:none;color:var(--paper);font-size:18px;cursor:pointer}
-.b-stepper button:hover{background:rgba(255,255,255,.09)}
-.b-stepper .b-val{flex:1;text-align:center;font-family:'Fraunces';font-size:18px}
-.b-toggle{display:flex;align-items:center;gap:12px;margin-top:14px;color:rgba(245,241,234,.8);font-size:14px;cursor:pointer}
-.b-toggle input{width:auto}
-.b-review{margin-top:18px;padding:16px;border:1px dashed rgba(245,241,234,.22);font-family:'JetBrains Mono';font-size:12px;line-height:1.9;color:rgba(245,241,234,.8);white-space:pre-wrap}
-.b-estimate{display:none}.b-estimate.show{display:block}
-.b-err{color:#e8a07a;font-family:'JetBrains Mono';font-size:11.5px;min-height:16px;margin:10px 0 0;letter-spacing:.03em}
-.b-nav{display:flex;gap:12px;margin-top:18px}
+/* ===== booking form — two-column, dark, premium ===== */
+.b-grid{display:grid;grid-template-columns:0.82fr 1fr;gap:clamp(36px,5vw,76px);align-items:start}
+.b-aside,.b-main{min-width:0}            /* prevent grid blow-out from intrinsic input widths */
+/* left rail: pitch + live estimate + assurances */
+.b-aside .b-head{margin-bottom:24px}
+.b-aside .b-head .sub{color:rgba(245,241,234,.7);font-size:16px;max-width:34ch}
+.b-assure{list-style:none;margin-top:26px;display:grid;gap:13px}
+.b-assure li{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.05em;color:rgba(245,241,234,.62);
+  display:flex;align-items:center;gap:11px;text-transform:uppercase}
+.b-assure li::before{content:"";width:6px;height:6px;background:var(--bronze-2);transform:rotate(45deg);flex:0 0 auto}
+/* labeled step progress */
+.b-progress{list-style:none;display:flex;gap:10px;margin-bottom:30px}
+.b-dot{flex:1;display:flex;align-items:baseline;gap:8px;padding-top:13px;border-top:2px solid rgba(245,241,234,.16);
+  font-family:'JetBrains Mono';font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:rgba(245,241,234,.38);transition:.35s ease}
+.b-dot span{font-size:11px;opacity:.85}
+.b-dot.is-active{color:var(--paper);border-top-color:var(--bronze-2)}
+.b-dot.is-active span{color:var(--bronze-2)}
+/* steps + fields */
+.b-step{border:none;display:none;padding:0;margin:0}
+.b-step.is-active{display:block;animation:rise .45s ease}
+.b-step legend{font-family:'JetBrains Mono';font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--bronze-2);margin-bottom:18px}
+.b-form .field{margin-bottom:15px;min-width:0}
+.b-form label{display:block;font-family:'JetBrains Mono';font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(245,241,234,.5);margin-bottom:8px}
+.b-form input,.b-form select,.b-form textarea{width:100%;max-width:100%;min-width:0;padding:13px 15px;border-radius:2px;
+  background:rgba(255,255,255,0.04);border:1px solid rgba(245,241,234,0.18);color:var(--paper);
+  font-family:'Space Grotesk';font-size:14.5px;transition:.25s}
+.b-form textarea{resize:vertical;min-height:56px}
+.b-form input::placeholder{color:rgba(245,241,234,0.32)}
+.b-form input:focus,.b-form select:focus,.b-form textarea:focus{outline:none;border-color:var(--bronze-2);
+  background:rgba(255,255,255,0.07);box-shadow:0 0 0 3px rgba(184,133,71,.13)}
+.b-form select{appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:38px;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' fill='none'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23b88547' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 15px center}
+.b-form select option{background:var(--ink);color:var(--paper)}
+.b-form .field-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.b-form .field-row>.field{min-width:0}
+.b-link{background:none;border:none;color:var(--bronze-2);font-family:'JetBrains Mono';font-size:11.5px;
+  cursor:pointer;padding:4px 0 14px;letter-spacing:.05em;text-transform:uppercase;transition:.2s}
+.b-link:hover{color:var(--paper)}
+/* steppers */
+.b-stepper{display:flex;align-items:center;border:1px solid rgba(245,241,234,.18);border-radius:2px;overflow:hidden}
+.b-stepper button{flex:0 0 48px;height:48px;background:rgba(255,255,255,.04);border:none;color:var(--paper);
+  font-size:18px;cursor:pointer;transition:.2s}
+.b-stepper button:hover{background:var(--bronze);color:var(--paper)}
+.b-stepper .b-val{flex:1;text-align:center;font-family:'Fraunces';font-size:19px}
+.b-toggle{display:flex;align-items:center;gap:12px;margin-top:18px;color:rgba(245,241,234,.82);font-size:14px;cursor:pointer}
+.b-toggle input{width:auto;accent-color:var(--bronze)}
+.b-review{margin-top:20px;padding:18px;border:1px dashed rgba(245,241,234,.22);border-radius:2px;
+  font-family:'JetBrains Mono';font-size:12px;line-height:1.95;color:rgba(245,241,234,.82);white-space:pre-wrap}
+/* estimate card in the left rail */
+.b-estimate{display:none;margin-top:26px;padding:22px;border:1px solid rgba(245,241,234,.16);border-radius:2px;
+  background:rgba(0,0,0,.18)}
+.b-estimate.show{display:block;animation:rise .4s ease}
+.b-err{color:#e8a07a;font-family:'JetBrains Mono';font-size:11.5px;min-height:16px;margin:14px 0 0;letter-spacing:.03em}
+.b-nav{display:flex;gap:12px;margin-top:22px}
 .b-nav .btn{flex:1;justify-content:center}
+.b-nav .btn-ghost{color:var(--paper);border-color:rgba(245,241,234,.3)}
+@media(max-width:920px){
+  .b-grid{grid-template-columns:1fr;gap:32px}
+  .booking .quote-inner{padding:34px 22px}
+  .b-progress{gap:8px}
+  .b-dot{font-size:10px}
+}
+@media(max-width:560px){
+  .b-form .field-row{grid-template-columns:1fr}
+  .b-dot{flex-direction:column;gap:2px;align-items:flex-start}
+}
 @media(prefers-reduced-motion:reduce){
   *{animation:none!important;transition:none!important}
   .reveal{opacity:1;transform:none}.divider::after{transform:scaleX(1)}
@@ -527,17 +573,27 @@ header.scrolled{top:0}
 <section class="quote booking" id="quote">
   <div class="wrap">
     <div class="quote-inner reveal">
-      <div class="b-head">
-        <span class="eyebrow" data-t="booking.eyebrow">Reserve</span>
-        <h2 data-t="booking.heading">Reserve your <em>Sprinter.</em></h2>
-        <p class="sub" data-t="booking.sub"></p>
-      </div>
+     <div class="b-grid">
+      <aside class="b-aside">
+        <div class="b-head">
+          <span class="eyebrow" data-t="booking.eyebrow">Reserve</span>
+          <h2 data-t="booking.heading">Reserve your <em>Sprinter.</em></h2>
+          <p class="sub" data-t="booking.sub"></p>
+        </div>
+        <div class="estimate b-estimate" data-b-estimate></div>
+        <ul class="b-assure">
+          <li>Licensed &amp; insured</li>
+          <li>Fixed rate — no surge pricing</li>
+          <li>24/7 dispatch &amp; live flight tracking</li>
+        </ul>
+      </aside>
 
-      <div class="b-progress" aria-hidden="true">
-        <span class="b-dot is-active" data-step="1"></span>
-        <span class="b-dot" data-step="2"></span>
-        <span class="b-dot" data-step="3"></span>
-      </div>
+      <div class="b-main">
+      <ol class="b-progress" aria-hidden="true">
+        <li class="b-dot is-active" data-step="1"><span>01</span> Ride</li>
+        <li class="b-dot" data-step="2"><span>02</span> Guests</li>
+        <li class="b-dot" data-step="3"><span>03</span> Details</li>
+      </ol>
 
       <form class="b-form" novalidate>
         <!-- STEP 1 -->
@@ -598,14 +654,14 @@ header.scrolled{top:0}
           <div class="b-review" data-b-review></div>
         </fieldset>
 
-        <!-- estimate + nav -->
-        <div class="estimate b-estimate" data-b-estimate></div>
         <div class="b-err" data-b-err role="alert" aria-live="polite"></div>
         <div class="b-nav">
           <button type="button" class="btn btn-ghost" data-b-back hidden>← Back</button>
           <button type="button" class="btn qbtn" data-b-next>Continue →</button>
         </div>
       </form>
+      </div><!-- /.b-main -->
+     </div><!-- /.b-grid -->
     </div>
   </div>
 </section>
@@ -1060,7 +1116,7 @@ function initBooking(){
     if(url) window.open(url, '_blank');
   }
   function updateEstimate(){
-    const est = $('[data-b-estimate]'); const r = (CONTENT.rates)||{};
+    const est = document.querySelector('#quote [data-b-estimate]'); const r = (CONTENT.rates)||{};
     if(isHourly()){
       const RATE=+r.hourly||150, MIN=+r.minimumHours||4, TAX=(+r.salesTaxPercent||0)/100, GRAT=(+r.gratuityPercent||0)/100;
       let hrs=Math.floor(parseFloat($('[data-b-hours]').value)||MIN); if(hrs<MIN){hrs=MIN; $('[data-b-hours]').value=MIN;}
