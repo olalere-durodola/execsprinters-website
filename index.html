@@ -702,6 +702,15 @@ function get(path){
   return path.split('.').reduce((o,k)=> (o==null?undefined:o[k]), CONTENT);
 }
 
+function renderBooking(){
+  const b = CONTENT.booking; if(!b) return;
+  const fill = (sel, arr) => { const el=document.querySelector(sel); if(el&&Array.isArray(arr)) el.innerHTML = arr.map(o=>`<option>${fmt(o)}</option>`).join(''); };
+  fill('[data-b-service]', b.serviceTypes);
+  fill('[data-b-seattype]', b.childSeatTypes);
+  const veh = (CONTENT.fleet&&CONTENT.fleet.vehicles||[]).map(v=>v.name);
+  fill('[data-b-vehicle]', veh);
+}
+
 function applyContent(){
   if(!CONTENT) return;
 
@@ -837,6 +846,7 @@ function applyContent(){
     const l2 = fmt(CONTENT.hero.headlineLine2 || '');
     h.setAttribute('data-words', l1 + '|' + l2);
   }
+  renderBooking();
   buildHero();
 
   // re-observe any freshly-rendered reveal elements

@@ -19,5 +19,9 @@ site.ready().then(() => {
   a(d.querySelectorAll('#quote .b-progress .b-dot').length === 3, 'progress has 3 dots');
   a(!!d.querySelector('#quote [data-b-next]') && !!d.querySelector('#quote [data-b-back]'), 'has next/back buttons');
   a(!!d.querySelector('#quote select[data-b-service]'), 'service type select present');
+  a(d.querySelector('[data-b-service]').options.length === site.content.booking.serviceTypes.length, 'service options populated');
+  a(d.querySelector('[data-b-vehicle]').options.length === site.content.fleet.vehicles.length, 'vehicle options from fleet');
+  a(d.querySelector('[data-b-seattype]').options.length === site.content.booking.childSeatTypes.length, 'seat type options populated');
+  a(d.querySelector('#quote .sub').textContent.includes('four-hour'), 'booking sub text bound');
   done();
 });
