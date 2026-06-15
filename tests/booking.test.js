@@ -63,5 +63,13 @@ site.ready().then(() => {
   const before = d.querySelectorAll('[data-b-stops] input').length;
   d.querySelector('[data-b-addstop]').click();
   a(d.querySelectorAll('[data-b-stops] input').length === before + 1, 'add stop adds a field');
+  setSvc('Hourly / As Directed');
+  d.querySelector('[data-b-hours]').value = '6';
+  d.querySelector('[data-b-hours]').dispatchEvent(new site.window.Event('input'));
+  const est = d.querySelector('[data-b-estimate]');
+  a(est.classList.contains('show'), 'estimate shown for hourly');
+  a(/\$900\.00/.test(est.textContent), 'hourly base 6×150 = $900.00');
+  setSvc('From Airport');
+  a(/confirmed at booking/i.test(est.textContent), 'non-hourly shows fare-confirmed copy');
   done();
 });
