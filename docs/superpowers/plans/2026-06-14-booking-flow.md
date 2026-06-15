@@ -102,7 +102,7 @@ function loadSite(overrides = {}) {
     document: dom.window.document,
     content,
     flushRaf: () => raf.splice(0).forEach(cb => cb(16)),
-    ready: ms => new Promise(r => setTimeout(r, ms || 350)),
+    ready: ms => new Promise(r => setTimeout(r, ms || 500)),
   };
 }
 
@@ -352,6 +352,16 @@ Run: `node tests/booking.test.js`
 ```
 
 Add reduced-motion guard: append `.b-step.is-active{animation:none}` inside the existing reduced-motion media query.
+
+**Also remove the now-orphaned calculator sync in `boot()`** — the old `#q-hrs` / `#q-hrs-lbl` elements no longer exist. Delete these three lines from `boot()`:
+
+```js
+const min=(data.rates&&data.rates.minimumHours)||4;
+const hf=document.getElementById('q-hrs'); if(hf){hf.value=min;hf.min=min;}
+const hl=document.getElementById('q-hrs-lbl'); if(hl) hl.textContent='Hours ('+min+' min)';
+```
+
+(They're guarded so they wouldn't error, but they're dead code now.)
 
 - [ ] **Step 5: Run, expect PASS** for the Step-2 DOM checks.
 
@@ -796,6 +806,9 @@ setTimeout(()=>{
   a(titles.some(t=>/Booking form/.test(t)),'admin has Booking form section');
   a(!titles.some(t=>/Quote section text/.test(t)),'old Quote section removed');
   a(!!d.querySelector('details.sec'),'admin built sections');
+  // the new list-string editor for serviceTypes actually rendered (catches schema typos)
+  const labels=[...d.querySelectorAll('details.sec label')].map(l=>l.textContent);
+  a(labels.some(t=>/Service types/.test(t)),'serviceTypes editor rendered');
   console.log('\n'+(fails?fails+' FAILURE(S)':'ALL CHECKS PASSED'));process.exit(fails?1:0);
 },300);
 ```
