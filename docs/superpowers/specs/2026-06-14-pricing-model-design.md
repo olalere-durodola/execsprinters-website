@@ -66,6 +66,10 @@ field (`[data-b-hours-wrap]`) shows when **hourly OR point-to-point**. Airport k
 Flight # still only for airport; drop-off still hidden only for hourly (point-to-point keeps
 drop-off). The Hours-input `input` listener still recomputes the estimate.
 
+**Validation unchanged & correct:** `validate()` requires drop-off for all non-hourly types,
+which includes airport — this is intended (airport transfers have a destination/origin), so
+no change to `validate()`.
+
 ## 6. Collect / summary
 
 `collect()` must capture `hours` whenever the Hours field is in use (hourly **or**
