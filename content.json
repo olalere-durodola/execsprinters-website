@@ -37,6 +37,7 @@
 
   "nav": [
     { "label": "Experience", "href": "#experience" },
+    { "label": "Services", "href": "#services" },
     { "label": "Fleet", "href": "#fleet" },
     { "label": "Quote", "href": "#quote" },
     { "label": "Areas", "href": "#areas" },
@@ -130,6 +131,35 @@
     ]
   },
 
+  "services": {
+    "eyebrow": "Our Services",
+    "heading": "Tailored to *every occasion.*",
+    "sub": "Tailored transportation solutions for every occasion.",
+    "cta": "Reserve",
+    "items": [
+      { "title": "Airport Transfers",
+        "description": "Reliable, punctual airport pickup and drop-off with flight tracking and meet & greet.",
+        "features": ["Flight monitoring", "Luggage assistance", "Complimentary wait time"],
+        "price": "$250 / trip · up to 50 mi" },
+      { "title": "Corporate Transportation",
+        "description": "Professional transportation for executives, meetings, conferences, and corporate events.",
+        "features": ["WiFi & power outlets", "Privacy partitions", "Billing & invoicing"],
+        "price": "$150/hr · 4-hr minimum" },
+      { "title": "Special Events",
+        "description": "Make your special occasions memorable with our luxury Sprinter van service.",
+        "features": ["Weddings & proms", "Anniversaries", "Night-out packages"],
+        "price": "$150/hr · 4-hr minimum" },
+      { "title": "Point-to-Point",
+        "description": "Direct transportation from your location to your destination with no stops.",
+        "features": ["Direct routes", "Fixed pricing", "Express service"],
+        "price": "$150/hr" },
+      { "title": "Hourly Charter",
+        "description": "Book our Sprinter van by the hour for multiple stops and flexible scheduling.",
+        "features": ["Flexible timing", "Multiple stops", "Dedicated vehicle"],
+        "price": "$150/hr · 4-hr minimum" }
+    ]
+  },
+
   "marquee": [
     "Mercedes-Benz Sprinter Fleet",
     "Licensed & Insured",
@@ -188,9 +218,9 @@
       {
         "title": "Service",
         "links": [
-          { "label": "Airport Transfers", "href": "#experience" },
-          { "label": "Corporate Shuttles", "href": "#experience" },
-          { "label": "Charter & Events", "href": "#experience" },
+          { "label": "Airport Transfers", "href": "#services" },
+          { "label": "Corporate Shuttles", "href": "#services" },
+          { "label": "Charter & Events", "href": "#services" },
           { "label": "Corporate Accounts", "href": "#quote" }
         ]
       },
