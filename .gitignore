@@ -13,5 +13,6 @@ Thumbs.db
 # visual-companion brainstorm mockups (local only)
 .superpowers/
 
-# local photo source (don't commit the heavy original)
+# local photo sources (don't commit the heavy originals)
 images/wedding.png
+images/stadium.png
