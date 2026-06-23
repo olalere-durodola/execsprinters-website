@@ -80,8 +80,8 @@ header .btn-primary:hover{background:var(--bronze-2)}
   background:linear-gradient(90deg,rgba(20,16,10,0.55),rgba(20,16,10,0.15) 45%,transparent 70%),
             linear-gradient(0deg,rgba(20,16,10,0.5),transparent 45%)}
 .hero-inner{position:relative;width:100%;padding-bottom:9vh;color:#fff}
-.hero h1{font-size:clamp(44px,7vw,92px);font-weight:300;margin:20px 0 26px;max-width:14ch;color:#fff;text-shadow:0 2px 30px rgba(0,0,0,0.25)}
-.hero h1 em{font-style:italic;font-weight:400;color:var(--bronze-2)}
+.hero h1{font-size:clamp(44px,7vw,92px);font-weight:300;margin:20px 0 26px;max-width:18ch;color:#fff;text-shadow:0 2px 30px rgba(0,0,0,0.25)}
+.hero h1 em{font-style:italic;font-weight:400;color:#fff}
 .hero h1 .w{display:inline-block;opacity:0;transform:translateY(0.55em);filter:blur(8px);
   animation:wordIn .9s cubic-bezier(.2,.7,.2,1) forwards}
 @keyframes wordIn{to{opacity:1;transform:none;filter:blur(0)}}
@@ -1048,7 +1048,7 @@ function buildHero(){
   const wrap=(txt)=>txt.replace(/\S+/g,w=>`<span class="w" style="animation-delay:${base+(i++)*0.09}s">${w}</span>`);
   const line1=wrap(l1);
   const line2=l2.replace(/<em>(.*?)<\/em>/,(m,inner)=>`<em>${wrap(inner)}</em>`);
-  h.innerHTML=line1+'<br>'+line2;
+  h.innerHTML=line1+(line2?' '+line2:'');
 }
 
 /* ---------- scroll reveal ---------- */
