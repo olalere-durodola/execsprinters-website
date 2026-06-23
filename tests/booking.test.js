@@ -77,6 +77,14 @@ site.ready().then(() => {
   a(/\$250\.00/.test(est.textContent), 'airport base = flat $250.00');
   a(/Gratuity/.test(est.textContent), 'airport estimate has gratuity line');
   a(!/confirmed at booking/i.test(est.textContent), 'no more fare-confirmed copy');
+  // return trip only shows for airport, and doubles the flat fare
+  a(!d.querySelector('[data-b-return-wrap]').hidden, 'return-trip toggle shows for airport');
+  const ret = d.querySelector('[data-b-return]');
+  ret.checked = true; ret.dispatchEvent(new site.window.Event('change'));
+  a(/\$500\.00/.test(est.textContent), 'return trip doubles airport base to $500.00');
+  ret.checked = false; ret.dispatchEvent(new site.window.Event('change'));
+  setSvc('Hourly / As Directed');
+  a(d.querySelector('[data-b-return-wrap]').hidden, 'return-trip toggle hidden for non-airport');
   // point-to-point = hourly priced, hours field visible, 4-hr minimum
   setSvc('Point-to-Point');
   a(!d.querySelector('[data-b-hours-wrap]').hidden, 'hours field shows for point-to-point');

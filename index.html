@@ -734,6 +734,8 @@ html{scrollbar-width:thin;scrollbar-color:var(--bronze) var(--paper-2)}
             <div class="field" data-b-flight-wrap hidden><label>Flight # (optional)</label>
               <input type="text" data-b-flight placeholder="AA1423"></div>
           </div>
+          <label class="b-toggle" data-b-return-wrap hidden><input type="checkbox" data-b-return>
+            <span>Add return trip (round trip)</span></label>
         </fieldset>
 
         <!-- STEP 2 -->
@@ -1186,6 +1188,7 @@ function initBooking(){
       vehicle: $('[data-b-vehicle]').value,
       hours: /airport/i.test($('[data-b-service]').value) ? '' : Math.max((CONTENT.rates&&CONTENT.rates.minimumHours)||4, Math.floor(+$('[data-b-hours]').value||0)),
       flight: /airport/i.test($('[data-b-service]').value) ? $('[data-b-flight]').value.trim() : '',
+      returnTrip: /airport/i.test($('[data-b-service]').value) && $('[data-b-return]').checked,
       pax: stepVal('pax'), bags: stepVal('bags'),
       seats, seatType: seats>0 ? $('[data-b-seattype]').value : '',
       accessible: $('[data-b-accessible]').checked ? 'Yes' : 'No',
@@ -1205,6 +1208,7 @@ function initBooking(){
     L.push('Vehicle: '+b.vehicle);
     if(b.hours) L.push('Hours: '+b.hours);
     if(b.flight) L.push('Flight #: '+b.flight);
+    if(b.returnTrip) L.push('Return trip: Yes (round trip)');
     L.push(`Passengers: ${b.pax} | Luggage: ${b.bags} | Child seats: ${b.seats}${b.seatType?` (${b.seatType})`:''} | Accessible: ${b.accessible}`);
     if(b.phone) L.push('Phone: '+b.phone);
     if(b.notes) L.push('Notes: '+b.notes);
@@ -1227,8 +1231,10 @@ function initBooking(){
     const RATE=+r.hourly||150, MIN=+r.minimumHours||4, TAX=(+r.salesTaxPercent||0)/100, GRAT=(+r.gratuityPercent||0)/100;
     let base, baseLabel;
     if(airport){
-      base = +r.airportFlat||0;
-      baseLabel = 'airport flat rate';
+      const flat = +r.airportFlat||0;
+      const round = !!($('[data-b-return]') && $('[data-b-return]').checked);
+      base = round ? flat*2 : flat;
+      baseLabel = round ? 'round trip · 2 × flat' : 'airport flat rate';
     } else {
       let hrs=Math.floor(parseFloat($('[data-b-hours]').value)||MIN); if(hrs<MIN){hrs=MIN; $('[data-b-hours]').value=MIN;}
       base = hrs*RATE;
@@ -1244,12 +1250,15 @@ function initBooking(){
     est.classList.add('show');
   }
   $('[data-b-hours]').addEventListener('input', updateEstimate);
+  $('[data-b-return]').addEventListener('change', updateEstimate);
   function syncConditional(){
     const v = $('[data-b-service]').value;
     const hourly = /hourly/i.test(v);
     const airport = /airport/i.test(v);
     $('[data-b-hours-wrap]').hidden = airport;        // hours for hourly + point-to-point; airport is flat
     $('[data-b-flight-wrap]').hidden = !airport;
+    $('[data-b-return-wrap]').hidden = !airport;      // return trip only for airport transfers
+    if(!airport) $('[data-b-return]').checked = false;
     $('[data-b-dropoff-wrap]').hidden = hourly;
     updateEstimate();
   }
