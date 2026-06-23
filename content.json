@@ -156,9 +156,13 @@
         "description": "Direct transportation from your location to your destination with no stops.",
         "features": ["Direct routes", "Fixed pricing", "Express service"],
         "price": "$150/hr" },
-      { "title": "Hourly Charter",
+      { "title": "Hourly Charter / Tour",
         "description": "Book our Sprinter van by the hour for multiple stops and flexible scheduling.",
         "features": ["Flexible timing", "Multiple stops", "Dedicated vehicle"],
+        "price": "$150/hr · 4-hr minimum" },
+      { "title": "Universal Studio, Frisco",
+        "description": "Group transportation to Universal Kids Resort in Frisco — comfortable round trips for families and parties of any size.",
+        "features": ["Round-trip service", "Door-to-door pickup", "Group-friendly"],
         "price": "$150/hr · 4-hr minimum" }
     ]
   },
